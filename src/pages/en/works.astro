@@ -59,7 +59,7 @@ const works = [
         {works.map((w) => (
           <a
             href={w.href ?? '#'}
-            {w.href ? 'target="_blank" rel="noopener noreferrer"' : ''}
+            {w.href && w.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
             class="block border border-fg/10 rounded-lg p-6 hover:border-accent/50 hover:translate-x-1 transition-all"
           >
             <div class="flex items-start justify-between gap-4">
