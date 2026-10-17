@@ -4,39 +4,52 @@ import en from '../../i18n/en.json';
 
 const works = [
   {
-    title: 'Alpha Signal',
-    desc: 'Vectorized backtesting framework for multi-factor strategies, with attribution analysis.',
+    title: 'AI Resume Generator',
+    desc: 'Auto-generates polished resume PDFs from basic info. Multiple templates supported.',
+    tags: ['AI', 'Product'],
+    href: '#',
+  },
+  {
+    title: 'Excel Compare Tool',
+    desc: 'One-click Excel comparison with highlighted differences and report output.',
+    tags: ['Excel', 'Python'],
+    href: '#',
+  },
+  {
+    title: 'QuantTrade',
+    desc: 'Quant backtesting framework with vectorized strategy testing and attribution analysis.',
     tags: ['Quant', 'Python', 'OpenSource'],
-    href: 'https://github.com/RedSamerai/alpha-signal',
-    external: true,
+    href: 'https://github.com/RedSamerai',
   },
   {
-    title: 'SceneAI',
-    desc: 'LLM-based screenplay storyboard analyzer — auto-decomposes shot language and pacing curves.',
-    tags: ['Film', 'AI'],
-    href: 'https://github.com/RedSamerai/sceneai',
-    external: true,
+    title: 'Trade Data Cleaner',
+    desc: 'Auto-clean MT5 export data, remove invalid candles, normalize formats.',
+    tags: ['Data Cleaning', 'Quant'],
+    href: 'https://github.com/RedSamerai/quantclean',
   },
   {
-    title: 'TabLens',
-    desc: 'Chrome extension that smart-summarizes and denoises your feeds for faster reading.',
-    tags: ['ChromeExt', 'TypeScript'],
-    href: 'https://github.com/RedSamerai/tablens',
-    external: true,
+    title: 'Meeting Minutes Tool V2',
+    desc: 'Real-time speech-to-text + local LLM summarization for structured meeting notes.',
+    tags: ['AI', 'Product', 'Python'],
+    href: '#',
   },
   {
-    title: '《Dark Thread》(暗线)',
-    desc: 'Original mystery screenplay, dual-timeline narrative — second draft in progress.',
+    title: 'Chrome Video Translator',
+    desc: 'Local Whisper transcription + auto subtitles, no internet needed.',
+    tags: ['ChromeExt', 'AI', 'OpenSource'],
+    href: 'https://github.com/RedSamerai/video-summary-extension',
+  },
+  {
+    title: 'A-Share Quant MCP',
+    desc: 'AKShare-based MCP server: stock screening, northbound flow, Dragon Tiger, margin data.',
+    tags: ['Quant', 'MCP', 'OpenSource'],
+    href: 'https://github.com/RedSamerai/a-stock-mcp',
+  },
+  {
+    title: '《Two As One》Screenplay',
+    desc: '10-episode crime drama, inspired by Breaking Bad and Better Call Saul.',
     tags: ['Screenplay'],
-    href: null,
-    external: false,
-  },
-  {
-    title: 'astro-i18n-kit',
-    desc: 'Zero-dependency bilingual routing scaffold for Astro.',
-    tags: ['OpenSource', 'Astro'],
-    href: 'https://github.com/RedSamerai/astro-i18n-kit',
-    external: true,
+    href: '#',
   },
 ];
 ---
@@ -59,14 +72,14 @@ const works = [
         {works.map((w) => (
           <a
             href={w.href ?? '#'}
-            {w.href && w.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+            {w.href && w.href !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
             class="block border border-fg/10 rounded-lg p-6 hover:border-accent/50 hover:translate-x-1 transition-all"
           >
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h2 class="text-xl font-bold hover:text-accent transition-colors">
                   {w.title}
-                  {w.external && <span class="ml-2 text-xs font-mono text-muted">↗</span>}
+                  {w.href && w.href !== '#' && <span class="ml-2 text-xs font-mono text-muted">↗</span>}
                 </h2>
                 <p class="mt-2 text-sm text-muted leading-relaxed">{w.desc}</p>
                 <div class="mt-4 flex gap-2 flex-wrap">

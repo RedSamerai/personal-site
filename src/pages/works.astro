@@ -4,39 +4,52 @@ import zh from '../i18n/zh.json';
 
 const works = [
   {
-    title: 'Alpha Signal',
-    desc: '多因子量化策略回测框架，支持向量化回测与归因分析。',
+    title: 'AI简历生成器',
+    desc: '输入基本信息，自动生成排版精美的简历PDF。支持多模板切换。',
+    tags: ['AI', '产品'],
+    href: '#',
+  },
+  {
+    title: 'Excel表格比对工具',
+    desc: '一键对比两份Excel，高亮差异单元格，输出比对报告。',
+    tags: ['Excel工具', 'Python'],
+    href: '#',
+  },
+  {
+    title: 'QuantTrade',
+    desc: '量化回测框架，支持向量化策略测试与归因分析。',
     tags: ['量化', 'Python', '开源'],
-    href: 'https://github.com/RedSamerai/alpha-signal',
-    external: true,
+    href: 'https://github.com/RedSamerai',
   },
   {
-    title: 'SceneAI',
-    desc: '基于 LLM 的剧本分镜分析工具，自动拆解镜头语言与节奏曲线。',
-    tags: ['影视分析', 'AI'],
-    href: 'https://github.com/RedSamerai/sceneai',
-    external: true,
+    title: '交易数据清洗',
+    desc: 'MT5导出数据自动清洗，去除无效K线，统一格式，生成分析就绪的CSV。',
+    tags: ['数据清洗', '量化'],
+    href: 'https://github.com/RedSamerai/quantclean',
   },
   {
-    title: 'TabLens',
-    desc: 'Chrome 扩展：对信息流做智能摘要与降噪筛选，提升阅读效率。',
-    tags: ['Chrome扩展', 'TypeScript'],
-    href: 'https://github.com/RedSamerai/tablens',
-    external: true,
+    title: '会议纪要工具包V2',
+    desc: '实时语音转写 + 本地LLM摘要，自动生成结构化会议纪要。',
+    tags: ['AI', '产品', 'Python'],
+    href: '#',
   },
   {
-    title: '《暗线》',
-    desc: '原创悬疑剧本，双时间线叙事，正在打磨第二稿。',
+    title: 'Chrome视频翻译扩展',
+    desc: '本地Whisper转写 + 自动字幕，无需联网翻译。',
+    tags: ['Chrome扩展', 'AI', '开源'],
+    href: 'https://github.com/RedSamerai/video-summary-extension',
+  },
+  {
+    title: 'A股量化MCP',
+    desc: 'AKShare封装的MCP服务器，选股/北向资金/龙虎榜/两融等11个工具。',
+    tags: ['量化', 'MCP', '开源'],
+    href: 'https://github.com/RedSamerai/a-stock-mcp',
+  },
+  {
+    title: '《二人组》剧本',
+    desc: '十集犯罪剧，对标《绝命毒师》《风骚律师》风格。正在创作中。',
     tags: ['剧本创作'],
-    href: null,
-    external: false,
-  },
-  {
-    title: 'astro-i18n-kit',
-    desc: '极简的 Astro 多语言脚手架，零依赖实现中英双语路由。',
-    tags: ['开源项目', 'Astro'],
-    href: 'https://github.com/RedSamerai/astro-i18n-kit',
-    external: true,
+    href: '#',
   },
 ];
 ---
@@ -61,14 +74,14 @@ const works = [
         {works.map((w) => (
           <a
             href={w.href ?? '#'}
-            {w.href && w.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+            {w.href && w.href !== '#' ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
             class="block border border-fg/10 rounded-lg p-6 hover:border-accent/50 hover:translate-x-1 transition-all"
           >
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h2 class="text-xl font-bold hover:text-accent transition-colors">
                   {w.title}
-                  {w.external && <span class="ml-2 text-xs font-mono text-muted">↗</span>}
+                  {w.href && w.href !== '#' && <span class="ml-2 text-xs font-mono text-muted">↗</span>}
                 </h2>
                 <p class="mt-2 text-sm text-muted leading-relaxed">{w.desc}</p>
                 <div class="mt-4 flex gap-2 flex-wrap">

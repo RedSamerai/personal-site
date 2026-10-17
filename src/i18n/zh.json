@@ -1,7 +1,7 @@
 {
   "name": "RedSamerai",
-  "tagline": "量化 · AI · 设计 · 剧本",
-  "heroDescription": "用代码解决问题，用作品表达想法。",
+  "tagline": "作品 · 推荐 · AI · 工具",
+  "heroDescription": "坐标北京，一个什么都会点又什么都不太精通的80后。",
   "nav": {
     "home": "首页",
     "about": "关于",
@@ -10,14 +10,14 @@
   },
   "about": {
     "title": "关于我",
-    "bio": "你好，我是 RedSamerai。我热衷于用代码与数据解决问题，专注量化策略、AI 应用、Chrome 扩展开发与剧本创作。我相信好的产品是逻辑与审美的结合。",
+    "bio": "坐标北京，一个什么都会点又什么都不太精通的80后。做过量化、写过剧本、拆过Excel、也折腾过AI工具。信一句话：好产品是逻辑与审美的结合。",
     "skillsTitle": "技能标签",
-    "skills": ["量化", "AI", "设计", "剧本创作", "前端", "数据分析"]
+    "skills": ["量化", "AI", "产品", "设计", "剧本", "前端"]
   },
   "works": {
     "title": "作品",
-    "subtitle": "最近的项目与实验。",
-    "categories": ["#量化", "#影视分析", "#Chrome扩展", "#剧本创作", "#开源项目"]
+    "subtitle": "做过的东西。",
+    "categories": ["#AI工具", "#Excel工具", "#量化", "#数据清洗", "#开源"]
   },
   "recommendations": {
     "title": "推荐",

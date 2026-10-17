@@ -1,7 +1,7 @@
 {
   "name": "RedSamerai",
-  "tagline": "Quant · AI · Design · Screenwriting",
-  "heroDescription": "Solving problems with code, expressing ideas through work.",
+  "tagline": "Works · Recommends · AI · Tools",
+  "heroDescription": "Based in Beijing. A 80s kid who dabbles in everything — quant, AI, products, screenwriting.",
   "nav": {
     "home": "Home",
     "about": "About",
@@ -10,14 +10,14 @@
   },
   "about": {
     "title": "About Me",
-    "bio": "Hi, I'm RedSamerai. I build things at the intersection of code and data — quant strategies, AI applications, Chrome extensions, and screenplays. I believe great products are where logic meets taste.",
+    "bio": "Based in Beijing. I've built quant tools, written screenplays, automated Excel workflows, and tinkered with AI. One belief: great products live at the intersection of logic and taste.",
     "skillsTitle": "Skill Tags",
-    "skills": ["Quant", "AI", "Design", "Screenwriting", "Frontend", "Data Analysis"]
+    "skills": ["Quant", "AI", "Products", "Design", "Screenwriting", "Frontend"]
   },
   "works": {
     "title": "Works",
-    "subtitle": "Recent projects and experiments.",
-    "categories": ["#Quant", "#FilmAnalysis", "#ChromeExtension", "#Screenplay", "#OpenSource"]
+    "subtitle": "Things I've built.",
+    "categories": ["#AI Tools", "#Excel Tools", "#Quant", "#Data Cleaning", "#Open Source"]
   },
   "recommendations": {
     "title": "Recommendations",
