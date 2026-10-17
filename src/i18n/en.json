@@ -1,0 +1,30 @@
+{
+  "name": "RedSamerai",
+  "tagline": "Quant · AI · Design · Screenwriting",
+  "heroDescription": "Solving problems with code, expressing ideas through work.",
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "works": "Works",
+    "recommendations": "Recommends"
+  },
+  "about": {
+    "title": "About Me",
+    "bio": "Hi, I'm RedSamerai. I build things at the intersection of code and data — quant strategies, AI applications, Chrome extensions, and screenplays. I believe great products are where logic meets taste.",
+    "skillsTitle": "Skill Tags",
+    "skills": ["Quant", "AI", "Design", "Screenwriting", "Frontend", "Data Analysis"]
+  },
+  "works": {
+    "title": "Works",
+    "subtitle": "Recent projects and experiments.",
+    "categories": ["#Quant", "#FilmAnalysis", "#ChromeExtension", "#Screenplay", "#OpenSource"]
+  },
+  "recommendations": {
+    "title": "Recommendations",
+    "tabs": {
+      "movies": "Film",
+      "music": "Music",
+      "books": "Books"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+# Cloudflare Pages 部署配置
+# 在 Cloudflare Dashboard 手动连接 GitHub 仓库后，
+# 使用 Build command: npm run build, Output directory: dist
+# 此文件供 wrangler 本地/CI 部署使用（可选）
+
+name = "personal-site"
+pages_build_output_dir = "dist"
+compatibility_date = "2024-09-01"

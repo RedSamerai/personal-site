@@ -1,0 +1,82 @@
+---
+import Layout from '../../components/Layout.astro';
+import en from '../../i18n/en.json';
+import { getCollection } from 'astro:content';
+
+const [movies, music, books] = await Promise.all([
+  getCollection('recommendations', (d) => d.id === 'movies'),
+  getCollection('recommendations', (d) => d.id === 'music'),
+  getCollection('recommendations', (d) => d.id === 'books'),
+]);
+
+const tabs = [
+  { key: 'movies', label: en.recommendations.tabs.movies, entries: movies[0]?.data.items ?? [] },
+  { key: 'music', label: en.recommendations.tabs.music, entries: music[0]?.data.items ?? [] },
+  { key: 'books', label: en.recommendations.tabs.books, entries: books[0]?.data.items ?? [] },
+];
+---
+
+<Layout lang="en">
+  <section class="py-24">
+    <div class="max-w-2xl mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-black tracking-tight">{en.recommendations.title}</h1>
+
+      <div class="mt-10 flex border-b border-fg/10">
+        {tabs.map((tab, i) => (
+          <button
+            data-tab={tab.key}
+            type="button"
+            class={`tab-btn flex-1 py-3 text-sm font-mono transition-colors ${i === 0 ? 'text-accent border-b-2 border-accent' : 'text-muted hover:text-fg'}`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {tabs.map((tab, i) => (
+        <div id={`panel-${tab.key}`} class={`mt-8 space-y-4 ${i === 0 ? '' : 'hidden'}`}>
+          {tab.entries.map((item) => (
+            <article class="flex gap-5 border border-fg/10 rounded-lg p-5 hover:border-accent/40 transition-colors">
+              <div class="shrink-0 w-16 h-20 bg-fg/5 border border-fg/10 rounded flex items-center justify-center text-muted text-2xl">
+                {item.title.charAt(0)}
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center justify-between gap-3">
+                  <h2 class="font-bold text-lg">
+                    {item.link ? (
+                      <a href={item.link} target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">
+                        {item.title} ↗
+                      </a>
+                    ) : (
+                      item.title
+                    )}
+                  </h2>
+                  <span class="shrink-0 font-mono text-accent text-sm">★ {item.rating.toFixed(1)}</span>
+                </div>
+                <p class="mt-2 text-sm text-muted leading-relaxed">{item.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('[id^="panel-"]');
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.tab;
+        panels.forEach((p) => p.classList.toggle('hidden', p.id !== `panel-${key}`));
+        buttons.forEach((b) => {
+          const active = b.dataset.tab === key;
+          b.classList.toggle('text-accent', active);
+          b.classList.toggle('border-b-2', active);
+          b.classList.toggle('border-accent', active);
+          b.classList.toggle('text-muted', !active);
+        });
+      });
+    });
+  </script>
+</Layout>
