@@ -4,20 +4,37 @@ import zh from '../i18n/zh.json';
 ---
 
 <Layout lang="zh">
-  <section class="py-24">
-    <div class="max-w-2xl mx-auto px-6">
-      <h1 class="text-4xl md:text-5xl font-black tracking-tight">{zh.about.title}</h1>
-      <p class="mt-8 text-lg leading-relaxed text-fg/80">{zh.about.bio}</p>
-
-      <h2 class="mt-12 text-sm font-mono text-muted">// {zh.about.skillsTitle}</h2>
-      <div class="mt-4 flex flex-wrap gap-2">
-        {zh.about.skills.map((skill) => (
-          <span
-            class="text-sm font-mono border border-fg/20 rounded px-3 py-1 hover:border-accent/60 hover:text-accent transition-colors cursor-default"
-          >
-            {skill}
-          </span>
-        ))}
+  <section class="py-24 min-h-[80vh] flex items-center">
+    <div class="max-w-5xl mx-auto px-6 w-full">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <div class="fade-in order-2 md:order-1">
+          <div class="photo-placeholder aspect-[3/4]">
+            <span class="block text-center px-4">
+              <div class="text-5xl mb-3 opacity-30">👤</div>
+              个人照片<br/>800×1067
+            </span>
+          </div>
+        </div>
+        <div class="fade-in fade-in-delay-1 order-1 md:order-2">
+          <p class="font-mono text-accent text-sm mb-6 tracking-wide">// about</p>
+          <h1 class="font-serif text-5xl md:text-6xl font-semibold tracking-tight leading-tight">{zh.about.title}</h1>
+          <p class="mt-8 text-lg text-fg-muted leading-relaxed max-w-lg">{zh.about.bio}</p>
+          <div class="mt-12">
+            <h2 class="font-mono text-sm text-fg-subtle mb-4 uppercase tracking-widest">{zh.about.skillsTitle}</h2>
+            <div class="flex flex-wrap gap-2">
+              {zh.about.skills.map((skill) => (
+                <span class="text-sm font-mono border border-fg/15 rounded px-3 py-1.5 text-fg-muted hover:border-accent/40 hover:text-accent-hover transition-colors cursor-default">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div class="mt-12 flex gap-4">
+            <a href="/works" class="inline-flex items-center px-5 py-3 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent-hover transition-colors">查看作品</a>
+            <a href="https://github.com/RedSamerai" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center px-5 py-3 border border-fg/20 text-fg text-sm font-medium rounded-lg hover:border-fg/40 transition-colors">GitHub ↗</a>
+          </div>
+        </div>
       </div>
     </div>
   </section>

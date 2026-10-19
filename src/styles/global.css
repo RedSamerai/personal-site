@@ -1,12 +1,27 @@
 @import "tailwindcss";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/playfair-display/400.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
 
 @theme {
-  --color-bg: #0a0a0a;
-  --color-fg: #f5f5f5;
-  --color-accent: #00ff88;
-  --color-muted: #888888;
+  /* ── 深色主题（默认） ── */
+  --color-bg: #0f1419;
+  --color-surface: #1a2028;
+  --color-surface-2: #222b36;
+  --color-fg: #e8e6e1;
+  --color-fg-muted: #8a8f98;
+  --color-fg-subtle: #5c6168;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #60a5fa;
+  --color-border: rgba(255, 255, 255, 0.07);
 
-  --font-sans: "Inter", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
 }
 
 :root {
@@ -15,15 +30,42 @@
 
 html {
   font-size: 16px;
-  line-height: 1.8;
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-bg text-fg font-sans antialiased;
-  font-feature-settings: "kern";
+  @apply bg-bg text-fg font-sans antialiased leading-relaxed;
+  font-feature-settings: "kern", "liga";
 }
 
 ::selection {
-  background: #00ff88;
-  color: #0a0a0a;
+  background: rgba(59, 130, 246, 0.3);
+  color: #e8e6e1;
+}
+
+/* ── 滚动渐显动画 ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger 延迟（与内联 transition-delay 二选一使用，内联优先级更高） */
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+
+/* ── 照片占位 ── */
+.photo-placeholder {
+  @apply bg-surface-2 rounded-xl w-full aspect-[3/4] flex items-center justify-center;
+  color: var(--color-fg-subtle);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }

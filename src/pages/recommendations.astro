@@ -20,7 +20,7 @@ const tabs = [
 <Layout lang="zh">
   <section class="py-24">
     <div class="max-w-2xl mx-auto px-6">
-      <h1 class="text-4xl md:text-5xl font-black tracking-tight">{zh.recommendations.title}</h1>
+      <h1 class="font-serif text-4xl md:text-5xl font-semibold tracking-tight fade-in">{zh.recommendations.title}</h1>
 
       <!-- Tab 切换（原生细节元素，零依赖） -->
       <div class="mt-10 flex border-b border-fg/10">
@@ -28,7 +28,7 @@ const tabs = [
           <button
             data-tab={tab.key}
             type="button"
-            class={`tab-btn flex-1 py-3 text-sm font-mono transition-colors ${i === 0 ? 'text-accent border-b-2 border-accent' : 'text-muted hover:text-fg'}`}
+            class={`tab-btn flex-1 py-3 text-sm font-mono transition-colors ${i === 0 ? 'text-accent border-b-2 border-accent' : 'text-fg-subtle hover:text-fg'}`}
           >
             {tab.label}
           </button>
@@ -44,12 +44,12 @@ const tabs = [
           {tab.entries.map((item) => (
             <article class="flex gap-5 border border-fg/10 rounded-lg p-5 hover:border-accent/40 transition-colors">
               <!-- 封面占位（后续可替换为真实图片） -->
-              <div class="shrink-0 w-16 h-20 bg-fg/5 border border-fg/10 rounded flex items-center justify-center text-muted text-2xl">
+              <div class="shrink-0 w-16 h-20 bg-fg/5 border border-fg/10 rounded flex items-center justify-center text-fg-subtle text-2xl">
                 {item.title.charAt(0)}
               </div>
               <div class="flex-1">
                 <div class="flex items-center justify-between gap-3">
-                  <h2 class="font-bold text-lg">
+                  <h2 class="font-serif text-lg font-semibold">
                     {item.link ? (
                       <a href={item.link} target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">
                         {item.title} ↗
@@ -60,7 +60,7 @@ const tabs = [
                   </h2>
                   <span class="shrink-0 font-mono text-accent text-sm">★ {item.rating.toFixed(1)}</span>
                 </div>
-                <p class="mt-2 text-sm text-muted leading-relaxed">{item.description}</p>
+                <p class="mt-2 text-sm text-fg-muted leading-relaxed">{item.description}</p>
               </div>
             </article>
           ))}
@@ -82,7 +82,7 @@ const tabs = [
           b.classList.toggle('text-accent', active);
           b.classList.toggle('border-b-2', active);
           b.classList.toggle('border-accent', active);
-          b.classList.toggle('text-muted', !active);
+          b.classList.toggle('text-fg-subtle', !active);
         });
       });
     });

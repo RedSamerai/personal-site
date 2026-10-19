@@ -1,6 +1,4 @@
 ---
-// 基础布局：负责 <head>（字体/SEO）与 <body> 骨架
-// htmlLang: 由 Layout 传入，'zh-CN' | 'en'
 const { htmlLang = 'zh-CN' } = Astro.props;
 import '../styles/global.css';
 ---
@@ -13,14 +11,33 @@ import '../styles/global.css';
     <meta name="description" content="RedSamerai 的个人主页" />
     <meta name="generator" href="https://astro.build" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap"
-      rel="stylesheet"
-    />
+    <script>
+      (function() {
+        try {
+          const saved = localStorage.getItem('theme');
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = saved || (prefersDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-bg text-fg">
     <slot />
+    <script>
+      (function() {
+        try {
+          const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                io.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+          document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>

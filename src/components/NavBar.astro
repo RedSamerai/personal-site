@@ -1,45 +1,31 @@
 ---
-// 导航栏：左侧 logo/名字，右侧菜单 + 语言切换
-// lang: 当前页面语言 'zh' | 'en'
 const { lang = 'zh' } = Astro.props;
-import LanguageSwitch from '../components/LanguageSwitch.astro';
+import LanguageSwitch from './LanguageSwitch.astro';
 
-// 中英文导航文案
 const nav = {
-  zh: {
-    home: '首页',
-    about: '关于',
-    works: '作品',
-    recommendations: '推荐',
-  },
-  en: {
-    home: 'Home',
-    about: 'About',
-    works: 'Works',
-    recommendations: 'Recommends',
-  },
+  zh: { home: '首页', about: '关于', works: '作品', writing: '笔记' },
+  en: { home: 'Home', about: 'About', works: 'Works', writing: 'Writing' },
 };
 const t = nav[lang];
-
-// 英文页面在 /en/ 前缀下
 const prefix = lang === 'en' ? '/en' : '';
+
 const links = [
-  { href: prefix + '/', label: t.home, active: false },
-  { href: prefix + '/about', label: t.about, active: false },
-  { href: prefix + '/works', label: t.works, active: false },
-  { href: prefix + '/recommendations', label: t.recommendations, active: false },
+  { href: prefix + '/', label: t.home },
+  { href: prefix + '/about', label: t.about },
+  { href: prefix + '/works', label: t.works },
+  { href: prefix + '/#notes', label: t.writing },
 ];
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur bg-bg/80 border-b border-fg/10">
-  <nav class="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-    <a href={prefix + '/'} class="font-mono font-bold text-accent tracking-tight">
-      &lt;RedSamerai /&gt;
+<header class="fixed top-0 inset-x-0 z-50 border-b border-fg/7">
+  <nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href={prefix + '/'} class="font-serif text-xl font-semibold tracking-tight hover:text-fg-muted transition-colors">
+      RS
     </a>
-    <ul class="flex items-center gap-6">
+    <ul class="flex items-center gap-8">
       {links.map((link) => (
         <li>
-          <a href={link.href} class="text-sm text-muted hover:text-fg transition-colors">
+          <a href={link.href} class="text-sm font-medium text-fg-muted hover:text-fg transition-colors">
             {link.label}
           </a>
         </li>

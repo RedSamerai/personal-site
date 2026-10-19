@@ -1,25 +1,27 @@
 ---
-// 页面通用布局：BaseLayout（head/字体）+ NavBar（导航）+ 页脚
-// lang: 当前语言 'zh' | 'en'
 const { lang = 'zh' } = Astro.props;
 import BaseLayout from '../layouts/BaseLayout.astro';
-import NavBar from '../components/NavBar.astro';
+import NavBar from './NavBar.astro';
 
 const footer = {
-  zh: '© 2026 RedSamerai · Built with Astro',
-  en: '© 2026 RedSamerai · Built with Astro',
+  zh: '© 2026 RedSamerai · Built with Astro & Tailwind',
+  en: '© 2026 RedSamerai · Built with Astro & Tailwind',
 };
 const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 ---
 
 <BaseLayout htmlLang={htmlLang}>
   <NavBar lang={lang} />
-  <main class="flex-1">
+  <main class="flex-1 pt-16">
     <slot />
   </main>
-  <footer class="border-t border-fg/10 py-6">
-    <div class="max-w-4xl mx-auto px-6 text-xs text-muted font-mono">
-      {footer[lang]}
+  <footer class="border-t border-fg/7 py-8 mt-24">
+    <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
+      <p class="text-xs text-fg-subtle font-mono">{footer[lang]}</p>
+      <a href="https://github.com/RedSamerai" target="_blank" rel="noopener noreferrer"
+         class="text-xs text-fg-subtle font-mono hover:text-accent transition-colors">
+        GitHub ↗
+      </a>
     </div>
   </footer>
 </BaseLayout>
