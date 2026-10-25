@@ -1,10 +1,13 @@
 ---
-// 手风琴主组件：左侧分类按钮列表 + 右侧内容区
-// 交互：点击分类展开，再点关闭回到个人信息面板；切换分类前自动滚到顶
+// 两层手风琴组件：一级大项分类 + 二级小项展开
+// 交互：
+//   一级：点分类 → 右侧显示该分类的小项按钮列表（二级），其他一级关闭
+//   二级：点小项 → 立即展开该小项的 NavItem 列表，小项之间互斥
+//   点已展开的小项 → 收起回小项列表；点已展开的一级 → 回到默认（profile）
+//   移动端：一级用横向 <select>，二级按钮全宽纵向；切二级后自动滚到内容区顶
 import NavItem from './NavItem.astro';
 import PersonalPanel from './PersonalPanel.astro';
 
-// 9 个分类数据文件
 const video = await import('../../data/nav/01-video.json');
 const books = await import('../../data/nav/02-books.json');
 const opensource = await import('../../data/nav/03-opensource.json');
@@ -21,108 +24,212 @@ const categories = [
 ];
 
 const lang = Astro.props.lang ?? 'zh';
-
-// EN 页面用 title_en（若存在），否则回退中文
 const titleOf = (c) => (lang === 'en' && c.title_en ? c.title_en : c.title);
 const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
 ---
 
-<div class="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6 md:gap-10">
-  <!-- 左侧分类按钮（移动端纵向堆叠在上方） -->
+<div class="nav-acc">
+  <!-- 左侧：桌面端一级分类按钮；移动端纵向堆叠（最朴素） -->
   <div class="nav-sidebar shrink-0" role="tablist" aria-label="分类">
-    <div class="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0 md:pb-4 md:sticky md:top-24">
+    <div class="flex flex-col gap-2 md:sticky md:top-24">
       {categories.map((c) => (
         <button
           type="button"
-          data-cat={c.id}
+          data-l1={c.id}
           role="tab"
-          class="nav-btn shrink-0 min-w-[180px] md:min-w-0 text-left px-4 py-3 rounded-lg border border-fg/10 hover:border-fg/25 transition-colors flex items-center justify-between gap-2"
+          class="l1-btn text-left px-4 py-3 rounded-lg border border-fg/10 hover:border-fg/25 transition-colors flex items-center justify-between gap-2"
         >
           <span class="font-mono text-sm font-medium">
             <span class="text-fg-subtle mr-2">{c.id}</span>
-            <span class="nav-btn-title">{titleOf(c)}</span>
+            <span class="l1-title">{titleOf(c)}</span>
           </span>
-          <span class="nav-arrow text-fg-subtle text-sm">→</span>
+          <span class="l1-arrow text-fg-subtle text-sm">→</span>
         </button>
       ))}
     </div>
   </div>
 
-  <!-- 右侧内容区 -->
-  <div class="nav-content min-w-0">
-    <!-- 默认：个人信息面板 -->
-    <div data-panel="profile" class="nav-panel">
+  <!-- 右侧：内容区 -->
+  <div class="nav-content min-w-0" id="nav-content">
+    <!-- 默认：个人信息面板（未选一级时） -->
+    <div data-panel="profile" class="acc-panel">
       <PersonalPanel lang={lang} />
     </div>
 
-    <!-- 各分类内容面板（默认隐藏） -->
     {categories.map((c) => (
-      <div data-panel={`cat-${c.id}`} class="nav-panel hidden">
-        <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6">{titleOf(c)}</h2>
-        <div class="space-y-8">
-          {c.subcategories.map((sub) => (
-            <div>
-              <h3 class="font-mono text-sm text-fg-muted uppercase tracking-widest mb-3">
-                {sub.id} · {subTitleOf(sub)}
-              </h3>
-              <ul>
-                {sub.items.map((item) => (
-                  <NavItem item={item} subcategoryId={sub.id} lang={lang} />
-                ))}
-              </ul>
-            </div>
-          ))}
+      <div data-cat={c.id} class="acc-cat hidden">
+        <!-- 二级：小项按钮列表（选中一级后默认显示） -->
+        <div data-l1-active={c.id} class="l1-list">
+          <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6">{titleOf(c)}</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {c.subcategories.map((s) => (
+              <button
+                type="button"
+                data-l2={s.id}
+                class="l2-btn text-left px-3.5 py-2.5 rounded-lg border border-fg/10 hover:border-fg/20 transition-colors flex items-center justify-between gap-2"
+              >
+                <span class="font-mono text-xs font-medium">
+                  <span class="text-fg-subtle mr-1.5">{s.id}</span>
+                  <span class="l2-title text-sm">{subTitleOf(s)}</span>
+                </span>
+                <span class="l2-arrow text-fg-subtle text-xs">→</span>
+              </button>
+            ))}
+          </div>
         </div>
+
+        <!-- 三级：小项展开的条目列表（默认隐藏，点小项按钮后显示） -->
+        {c.subcategories.map((s) => (
+          <div data-l2-panel={s.id} class="l2-panel hidden">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="font-mono text-sm text-fg-muted uppercase tracking-widest">
+                {s.id} · {subTitleOf(s)}
+              </h3>
+              <button
+                type="button"
+                data-l2-close={s.id}
+                class="l2-close font-mono text-xs text-fg-subtle hover:text-fg-muted transition-colors"
+              >
+                收起 ↑
+              </button>
+            </div>
+            <ul>
+              {s.items.map((item) => (
+                <NavItem item={item} subcategoryId={s.id} lang={lang} />
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     ))}
   </div>
 </div>
 
 <script>
-  // 手风琴切换逻辑：立即显示/隐藏（无 max-height 动画）
-  const btns = document.querySelectorAll('.nav-btn');
-  const panels = document.querySelectorAll('.nav-panel');
-  const arrows = document.querySelectorAll('.nav-arrow');
+  // 两层手风琴：立即显示/隐藏，无展开动画
+  const content = document.querySelector('#nav-content');
+  const profilePanel = content.querySelector('[data-panel="profile"]');
+  const cats = [...content.querySelectorAll('.acc-cat')];
+  const l1Btns = [...document.querySelectorAll('.l1-btn')];
+  const l2Btns = [...document.querySelectorAll('.l2-btn')];
+  const l2Closes = [...document.querySelectorAll('[data-l2-close]')];
+  let openCat = null;   // 当前展开的一级 id
+  let openSub = null;   // 当前展开的二级 id
 
-  btns.forEach((btn, i) => {
-    btn.addEventListener('click', () => {
-      const catId = btn.dataset.cat;
-      const isActive = btn.classList.contains('active');
+  const isMobile = () => window.innerWidth < 768;
 
-      // 全部重置
-      btns.forEach((b) => {
-        b.classList.remove('active', 'border-accent/40', 'bg-surface');
-        b.setAttribute('aria-selected', 'false');
+  // 高亮 / 箭头状态
+  function markL1(id) {
+    l1Btns.forEach((b) => {
+      const on = b.dataset.l1 === id;
+      b.classList.toggle('l1-active', on);
+      b.setAttribute('aria-selected', String(on));
+      const arrow = b.querySelector('.l1-arrow');
+      if (arrow) {
+        arrow.textContent = on ? '↓' : '→';
+        arrow.classList.toggle('text-accent', on);
+      }
+    });
+  }
+  function markL2(cat, sub) {
+    cats.forEach((catEl) => {
+      catEl.querySelectorAll('.l2-btn').forEach((b) => {
+        const on = catEl.dataset.cat === cat && b.dataset.l2 === sub;
+        b.classList.toggle('l2-active', on);
+        const arrow = b.querySelector('.l2-arrow');
+        if (arrow) arrow.textContent = on ? '↓' : '→';
       });
-      arrows.forEach((a) => { a.textContent = '→'; a.classList.remove('rotate-90', 'text-accent'); });
-      panels.forEach((p) => p.classList.add('hidden'));
+    });
+  }
+  // 仅显示指定一级
+  function showCat(id) {
+    cats.forEach((c) => c.classList.toggle('hidden', c.dataset.cat !== id));
+  }
+  // 仅显示指定二级条目列表
+  function showSub(cat, sub) {
+    const catEl = content.querySelector(`[data-cat="${cat}"]`);
+    if (!catEl) return;
+    catEl.querySelector('[data-l1-active]').classList.add('hidden');
+    catEl.querySelectorAll('.l2-panel').forEach((p) =>
+      p.classList.toggle('hidden', p.dataset.l2Panel !== sub)
+    );
+  }
+  // 显示一级的小项按钮列表（收起所有二级）
+  function showSubList(cat) {
+    const catEl = content.querySelector(`[data-cat="${cat}"]`);
+    if (!catEl) return;
+    catEl.querySelectorAll('.l2-panel').forEach((p) => p.classList.add('hidden'));
+    catEl.querySelector('[data-l1-active]').classList.remove('hidden');
+  }
+  function scrollToTop() {
+    if (isMobile()) {
+      content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+  function resetAll() {
+    openCat = null; openSub = null;
+    cats.forEach((c) => c.classList.add('hidden'));
+    profilePanel.classList.remove('hidden');
+    markL1(null); markL2(null, null);
+  }
 
-      if (isActive) {
-        // 再次点击已展开的 → 关闭，回到个人信息面板
-        document.querySelector('[data-panel="profile"]').classList.remove('hidden');
-        return;
+  // 一级：点分类 → 显示其小项列表（重置二级）；点已展开的一级 → 回默认
+  l1Btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.l1;
+      if (openCat === id) { resetAll(); }
+      else {
+        openCat = id; openSub = null;
+        showCat(id);
+        showSubList(id);
+        profilePanel.classList.add('hidden');
+        markL1(id); markL2(null, null);
       }
+      scrollToTop();
+    });
+  });
 
-      // 展开该分类
-      btn.classList.add('active', 'border-accent/40', 'bg-surface');
-      btn.setAttribute('aria-selected', 'true');
-      arrows[i].textContent = '↓';
-      arrows[i].classList.add('rotate-0', 'text-accent');
-      document.querySelector(`[data-panel="cat-${catId}"]`).classList.remove('hidden');
-
-      // 移动端：切到分类后滚到内容区顶部
-      if (window.innerWidth < 768) {
-        document.querySelector('.nav-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // 二级：点小项 → 展开条目；点已展开的小项 → 收起回小项列表
+  l2Btns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.closest('.acc-cat').dataset.cat;
+      const sub = btn.dataset.l2;
+      if (openCat === cat && openSub === sub) {
+        openSub = null;
+        showSubList(cat);
+        markL2(cat, null);
+      } else {
+        openCat = cat; openSub = sub;
+        showCat(cat);
+        showSub(cat, sub);
+        markL1(cat); markL2(cat, sub);
       }
+      scrollToTop();
+    });
+  });
+
+  // 二级条目列表里的「收起 ↑」
+  l2Closes.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const sub = btn.dataset.l2Close;
+      const cat = btn.closest('.acc-cat').dataset.cat;
+      openSub = null;
+      showSubList(cat);
+      markL2(cat, null);
     });
   });
 </script>
 
 <style>
-  .nav-btn.active {
+  .l1-btn { transition: border-color .2s ease, background .2s ease; }
+  .l1-btn.l1-active {
     border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
     background: var(--color-surface);
   }
-  .nav-btn .nav-arrow { transition: transform 0.2s ease, color 0.2s ease; }
-  .nav-btn.active .nav-arrow { transform: rotate(90deg); color: var(--color-accent); }
+  .l2-btn { transition: border-color .2s ease, background .2s ease; }
+  .l2-btn.l2-active {
+    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  }
+  .l1-arrow, .l2-arrow { transition: transform .2s ease, color .2s ease; }
 </style>
