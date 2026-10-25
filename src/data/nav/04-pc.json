@@ -1,0 +1,52 @@
+{
+  "id": "04",
+  "title": "PC 工具",
+  "title_en": "PC Tools",
+  "subcategories": [
+    {
+      "id": "04-1",
+      "title": "系统/运行库",
+      "title_en": "System / Runtimes",
+      "items": [
+        { "name": "Microsoft Visual C++ Redistributable", "url": "https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist", "note": "VC++ 运行库全家桶", "stars": null, "vpn": false, "added": "2026-09-10" },
+        { "name": "DirectX Runtime", "url": "https://www.microsoft.com/en-us/download/details.aspx?id=8109", "note": "游戏/图形运行库", "stars": null, "vpn": false, "added": "2026-07-22" }
+      ]
+    },
+    {
+      "id": "04-2",
+      "title": "办公/文档",
+      "title_en": "Office / Documents",
+      "items": [
+        { "name": "LibreOffice", "url": "https://www.libreoffice.org/download/", "note": "开源办公套件", "stars": null, "vpn": false, "added": "2026-08-05" },
+        { "name": "Typora", "url": "https://typora.io", "note": "Markdown 编辑器（付费）", "stars": null, "vpn": false, "added": "2026-06-15" }
+      ]
+    },
+    {
+      "id": "04-3",
+      "title": "解压缩/文件",
+      "title_en": "Archive / Files",
+      "items": [
+        { "name": "7-Zip", "url": "https://www.7-zip.org", "note": "轻量压缩工具", "stars": null, "vpn": false, "added": "2026-05-20" },
+        { "name": "Bandizip", "url": "https://www.bandisoft.com/bandizip/", "note": "压缩+看图二合一", "stars": null, "vpn": false, "added": "2026-04-01" }
+      ]
+    },
+    {
+      "id": "04-4",
+      "title": "开发环境",
+      "title_en": "Dev environments",
+      "items": [
+        { "name": "VS Code", "url": "https://code.visualstudio.com", "note": "主流代码编辑器", "stars": null, "vpn": false, "added": "2026-03-18" },
+        { "name": "JetBrains 全家桶", "url": "https://www.jetbrains.com", "note": "IDE 家族", "stars": null, "vpn": true, "added": "2026-02-10" }
+      ]
+    },
+    {
+      "id": "04-5",
+      "title": "设计/修图工具",
+      "title_en": "Design / Image tools",
+      "items": [
+        { "name": "GIMP", "url": "https://www.gimp.org", "note": "开源修图", "stars": null, "vpn": false, "added": "2026-01-25" },
+        { "name": "Krita", "url": "https://krita.org", "note": "数字绘画", "stars": null, "vpn": false, "added": "2025-12-15" }
+      ]
+    }
+  ]
+}

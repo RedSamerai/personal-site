@@ -1,0 +1,73 @@
+---
+// 个人信息面板：未展开分类时默认显示
+// 头像占位 + 名字 + tagline + 作品列表 + 完整介绍链接
+import profile from '../../data/profile.json';
+
+const t = Astro.props.lang === 'en' ? {
+  projects: 'Projects',
+  view_all: 'Full bio →',
+  location: 'location',
+} : {
+  projects: '作品',
+  view_all: '完整介绍 →',
+  location: '坐标',
+};
+
+const aboutHref = Astro.props.lang === 'en' ? '/en/about' : '/about';
+---
+
+<div class="grid grid-cols-1 md:grid-cols-5 gap-8 fade-in">
+  <!-- 左：头像 + 信息（40%） -->
+  <div class="md:col-span-2">
+    <div class="w-20 h-20 rounded-full bg-surface-2 flex items-center justify-center text-3xl text-fg-subtle">
+      🧑
+    </div>
+    <h1 class="mt-5 font-serif text-3xl md:text-4xl font-semibold tracking-tight">
+      {profile.name}
+    </h1>
+    <p class="mt-2 text-base text-fg-muted leading-relaxed">{profile.tagline}</p>
+    <p class="mt-3 text-sm text-fg-subtle font-mono">{t.location} {profile.location}</p>
+    <a
+      href={aboutHref}
+      class="mt-6 inline-block font-mono text-sm text-fg-muted hover:text-accent-hover transition-colors"
+    >
+      {t.view_all}
+    </a>
+  </div>
+
+  <!-- 右：作品列表（60%） -->
+  <div class="md:col-span-3">
+    <h2 class="text-xs font-mono text-fg-subtle uppercase tracking-widest mb-4">
+      {t.projects}
+    </h2>
+    <ul class="space-y-3">
+      {profile.projects.map((p) => (
+        <li class="flex items-start gap-2">
+          {p.url ? (
+            <a
+              href={p.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-fg hover:text-accent-hover transition-colors shrink-0"
+            >
+              {p.name}
+            </a>
+          ) : (
+            <span class="font-medium text-fg shrink-0">{p.name}</span>
+          )}
+          <span class="text-sm text-fg-subtle leading-relaxed flex-1 min-w-0">{p.desc}</span>
+          {p.stars && (
+            <span class="text-xs font-mono text-fg-subtle shrink-0">⭐ {p.stars}</span>
+          )}
+          {p.url && (
+            <span class="shrink-0 text-fg-subtle" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.3-.15-1.32-.15-2.58 0-.6.3-1.02.66-1.2 1.38-.66-2.79-2.595-2.79-10.5 0-1.11.345-2.13.915-2.91a5.4 5.4 0 00-1.14-3.015c.945-.63 2.04-1.02 3.195-1.065a5.4 5.4 0 004.455 3.48 11.4 11.4 0 006.03 1.86c.285-1.38.855-2.61 1.665-3.6-1.17-.6-2.43-.99-3.735-1.155A5.4 5.4 0 0012.045 0c-.03-.03-.06-.03-.06-.03z" />
+              </svg>
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

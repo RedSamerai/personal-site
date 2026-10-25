@@ -1,0 +1,65 @@
+---
+// 单个导航条目渲染组件
+// props: item, subcategoryId, lang（zh/en）
+const { item, subcategoryId, lang = 'zh' } = Astro.props;
+
+// 失效反馈：跳转 GitHub Issue
+const issueUrl =
+  `https://github.com/RedSamerai/personal-site/issues/new?title=` +
+  encodeURIComponent(`[失效] ${subcategoryId} ${item.name}`) +
+  `&body=` +
+  encodeURIComponent(`链接已失效`);
+
+// 新增加入：added 距今 < 14 天显示绿点
+const addedDate = item.added ? new Date(item.added + 'T00:00:00') : null;
+const isNew = addedDate
+  ? (Date.now() - addedDate.getTime()) / 86400000 < 14
+  : false;
+
+const t = {
+  zh: { vpn: '🔓 需科学上网', report: '失效反馈' },
+  en: { vpn: '🔓 VPN required', report: 'Report broken' },
+}[lang];
+---
+
+<li class="group/item flex items-start gap-2 py-2.5 border-b border-fg/7 last:border-0">
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center gap-2 flex-wrap">
+      <a
+        href={item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-medium text-fg hover:text-accent-hover transition-colors break-all"
+      >
+        {item.name}
+      </a>
+      {item.stars && (
+        <span class="text-xs font-mono text-fg-subtle">⭐ {item.stars}</span>
+      )}
+      {item.vpn && (
+        <span class="text-xs font-mono text-amber-400/90 bg-amber-400/10 border border-amber-400/20 rounded px-1.5 py-0.5">
+          {t.vpn}
+        </span>
+      )}
+      {isNew && (
+        <span class="relative flex w-2 h-2" title="新增加入（14天内）">
+          <span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-60"></span>
+          <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-400"></span>
+        </span>
+      )}
+    </div>
+    {item.note && (
+      <p class="mt-0.5 text-sm text-fg-subtle leading-relaxed">{item.note}</p>
+    )}
+  </div>
+  <a
+    href={issueUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={t.report}
+    title={t.report}
+    class="shrink-0 text-fg-subtle hover:text-red-400 transition-colors text-sm opacity-0 group-hover/item:opacity-100"
+  >
+    ⚠
+  </a>
+</li>

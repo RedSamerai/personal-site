@@ -1,0 +1,22 @@
+---
+// 更新日志：显示 changelog.json 最新 3 条
+// 横向布局，每条：✅ {date}  {items[0]}...
+import changelog from '../../data/nav/changelog.json';
+
+const latest = changelog.slice(0, 3);
+---
+
+<div class="mb-10">
+  <h2 class="text-xs font-mono text-fg-subtle uppercase tracking-widest mb-3 fade-in">
+    Changelog
+  </h2>
+  <div class="space-y-2">
+    {latest.map((entry) => (
+      <div class="text-xs text-fg-subtle font-mono flex items-start gap-2">
+        <span class="shrink-0 text-emerald-400/70">✅</span>
+        <span class="shrink-0 text-fg-muted">{entry.date}</span>
+        <span class="truncate">{entry.items[0]}</span>
+      </div>
+    ))}
+  </div>
+</div>

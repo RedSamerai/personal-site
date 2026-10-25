@@ -3,33 +3,24 @@ const { lang = 'zh' } = Astro.props;
 import LanguageSwitch from './LanguageSwitch.astro';
 
 const nav = {
-  zh: { home: '首页', about: '关于', works: '作品', writing: '笔记' },
-  en: { home: 'Home', about: 'About', works: 'Works', writing: 'Writing' },
+  zh: { about: '关于' },
+  en: { about: 'About' },
 };
 const t = nav[lang];
 const prefix = lang === 'en' ? '/en' : '';
-
-const links = [
-  { href: prefix + '/', label: t.home },
-  { href: prefix + '/about', label: t.about },
-  { href: prefix + '/works', label: t.works },
-  { href: prefix + '/#notes', label: t.writing },
-];
 ---
 
 <header class="fixed top-0 inset-x-0 z-50 border-b border-fg/7">
-  <nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
     <a href={prefix + '/'} class="font-serif text-xl font-semibold tracking-tight hover:text-fg-muted transition-colors">
       RS
     </a>
-    <ul class="flex items-center gap-8">
-      {links.map((link) => (
-        <li>
-          <a href={link.href} class="text-sm font-medium text-fg-muted hover:text-fg transition-colors">
-            {link.label}
-          </a>
-        </li>
-      ))}
+    <ul class="flex items-center gap-6">
+      <li>
+        <a href={prefix + '/about'} class="text-sm font-medium text-fg-muted hover:text-fg transition-colors">
+          {t.about}
+        </a>
+      </li>
       <li>
         <LanguageSwitch lang={lang} />
       </li>

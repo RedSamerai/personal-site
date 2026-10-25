@@ -1,0 +1,64 @@
+{
+  "id": "01",
+  "title": "影视（在线·磁力·字幕）",
+  "title_en": "Video (online / magnet / subs)",
+  "subcategories": [
+    {
+      "id": "01-1",
+      "title": "免费在线（无会员）",
+      "title_en": "Free Online (no membership)",
+      "items": [
+        { "name": "示例影视站 A", "url": "https://example.com", "note": "4K无广告，偶尔有贴片广告", "stars": null, "vpn": false, "added": "2026-10-23" },
+        { "name": "示例影视站 B", "url": "https://example.org", "note": "无广告，需要科学上网", "stars": null, "vpn": true, "added": "2026-09-20" }
+      ]
+    },
+    {
+      "id": "01-2",
+      "title": "美剧/追剧",
+      "title_en": "US Series / Binge-watching",
+      "items": [
+        { "name": "示例追剧站", "url": "https://example.tv", "note": "更新最快，同步上线", "stars": null, "vpn": false, "added": "2026-10-01" }
+      ]
+    },
+    {
+      "id": "01-3",
+      "title": "动漫/纪录片",
+      "title_en": "Anime / Documentaries",
+      "items": [
+        { "name": "示例动漫站", "url": "https://example.anime", "note": "日更番剧+经典补档", "stars": null, "vpn": false, "added": "2026-08-15" }
+      ]
+    },
+    {
+      "id": "01-4",
+      "title": "直播",
+      "title_en": "Live",
+      "items": [
+        { "name": "示例直播源", "url": "https://example.live", "note": "体育/电竞直播", "stars": null, "vpn": false, "added": "2026-07-10" }
+      ]
+    },
+    {
+      "id": "01-5",
+      "title": "字幕",
+      "title_en": "Subtitles",
+      "items": [
+        { "name": "示例字幕站", "url": "https://example.sub", "note": "字幕下载与在线校对", "stars": null, "vpn": false, "added": "2026-06-01" }
+      ]
+    },
+    {
+      "id": "01-6",
+      "title": "磁力（国内可用）",
+      "title_en": "Magnet (works in China)",
+      "items": [
+        { "name": "示例磁力站", "url": "https://example.magnet", "note": "国内直连，影视资源全", "stars": null, "vpn": false, "added": "2026-05-20" }
+      ]
+    },
+    {
+      "id": "01-7",
+      "title": "磁力（需科学上网）",
+      "title_en": "Magnet (VPN required)",
+      "items": [
+        { "name": "示例磁力站（国际）", "url": "https://example.magnet.io", "note": "国际站，资源更新快", "stars": null, "vpn": true, "added": "2026-10-24" }
+      ]
+    }
+  ]
+}

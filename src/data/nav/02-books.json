@@ -1,0 +1,64 @@
+{
+  "id": "02",
+  "title": "电子书/音频/播客",
+  "title_en": "Books / Audio / Podcasts",
+  "subcategories": [
+    {
+      "id": "02-1",
+      "title": "电子书",
+      "title_en": "E-books",
+      "items": [
+        { "name": "示例电子书站", "url": "https://example.ebook", "note": "PDF/EPUB 免费下载", "stars": null, "vpn": false, "added": "2026-10-20" },
+        { "name": "示例开放图书", "url": "https://example.libre", "note": "开放获取，无需注册", "stars": null, "vpn": true, "added": "2026-09-01" }
+      ]
+    },
+    {
+      "id": "02-2",
+      "title": "网文/小说",
+      "title_en": "Novels / Web fiction",
+      "items": [
+        { "name": "示例小说网", "url": "https://example.novel", "note": "网文/轻小说聚合", "stars": null, "vpn": false, "added": "2026-08-25" }
+      ]
+    },
+    {
+      "id": "02-3",
+      "title": "漫画",
+      "title_en": "Comics / Manga",
+      "items": [
+        { "name": "示例漫画站", "url": "https://example.comic", "note": "日漫/美漫汉化", "stars": null, "vpn": false, "added": "2026-07-18" }
+      ]
+    },
+    {
+      "id": "02-4",
+      "title": "音乐下载",
+      "title_en": "Music downloads",
+      "items": [
+        { "name": "示例音乐站", "url": "https://example.music", "note": "无损下载，部分需科学上网", "stars": null, "vpn": true, "added": "2026-06-10" }
+      ]
+    },
+    {
+      "id": "02-5",
+      "title": "在线听歌",
+      "title_en": "Streaming music",
+      "items": [
+        { "name": "示例听歌站", "url": "https://example.listen", "note": "在线试听，无下载", "stars": null, "vpn": false, "added": "2026-05-05" }
+      ]
+    },
+    {
+      "id": "02-6",
+      "title": "有声书/听书",
+      "title_en": "Audiobooks",
+      "items": [
+        { "name": "示例听书站", "url": "https://example.audio", "note": "有声书/播客聚合", "stars": null, "vpn": false, "added": "2026-04-12" }
+      ]
+    },
+    {
+      "id": "02-7",
+      "title": "播客",
+      "title_en": "Podcasts",
+      "items": [
+        { "name": "示例播客站", "url": "https://example.podcast", "note": "中文播客聚合", "stars": null, "vpn": false, "added": "2026-03-30" }
+      ]
+    }
+  ]
+}

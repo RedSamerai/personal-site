@@ -1,0 +1,16 @@
+{
+  "name": "RedSamerai",
+  "location": "北京",
+  "tagline": "什么都会点又什么都不太精通的80后",
+  "description": "坐标北京，做量化交易、AI工具、剧本创作。这里放我筛选过的真正有用的资源。",
+  "projects": [
+    { "name": "a-stock-mcp", "desc": "A股量化MCP服务器，11个工具", "url": "https://github.com/RedSamerai/a-stock-mcp", "stars": "1.5k" },
+    { "name": "NarratoAI", "desc": "影视解说生成+自动剪辑", "url": "https://github.com/RedSamerai", "stars": "10.2k" },
+    { "name": "quantclean", "desc": "MT5数据清洗工具", "url": "https://github.com/RedSamerai/quantclean", "stars": null },
+    { "name": "视频翻译扩展", "desc": "Chrome本地Whisper转写", "url": "https://github.com/RedSamerai/video-summary-extension", "stars": null },
+    { "name": "AI简历生成器", "desc": "多模板简历PDF生成", "url": null, "stars": null },
+    { "name": "Excel比对工具", "desc": "一键Excel差异对比", "url": null, "stars": null },
+    { "name": "会议纪要工具包V2", "desc": "实时转写+本地摘要", "url": null, "stars": null },
+    { "name": "《二人组》", "desc": "十集犯罪剧（创作中）", "url": null, "stars": null }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "id": "08",
+  "title": "学习/考试",
+  "title_en": "Learning / Exams",
+  "subcategories": [
+    {
+      "id": "08-1",
+      "title": "义务教育（K-12）",
+      "title_en": "K-12 education",
+      "items": [
+        { "name": "示例K12平台", "url": "https://example.k12", "note": "同步课程+作业", "stars": null, "vpn": false, "added": "2026-10-08" }
+      ]
+    },
+    {
+      "id": "08-2",
+      "title": "大学公开课（国内·国外）",
+      "title_en": "University open courses",
+      "items": [
+        { "name": "示例公开课", "url": "https://example.opencourse", "note": "MIT/清华公开课聚合", "stars": null, "vpn": false, "added": "2026-09-22" }
+      ]
+    },
+    {
+      "id": "08-3",
+      "title": "编程/计算机",
+      "title_en": "Programming / CS",
+      "items": [
+        { "name": "示例编程站", "url": "https://example.code", "note": "交互式编程学习", "stars": null, "vpn": false, "added": "2026-08-30" }
+      ]
+    },
+    {
+      "id": "08-4",
+      "title": "外语",
+      "title_en": "Languages",
+      "items": [
+        { "name": "示例外语站", "url": "https://example.lang", "note": "口语+语法", "stars": null, "vpn": false, "added": "2026-07-15" }
+      ]
+    },
+    {
+      "id": "08-5",
+      "title": "财经类（CPA/中级经济师/注安）",
+      "title_en": "Finance exams (CPA etc.)",
+      "items": [
+        { "name": "示例财经考试站", "url": "https://example.cpa", "note": "CPA/注安题库", "stars": null, "vpn": false, "added": "2026-06-28" }
+      ]
+    },
+    {
+      "id": "08-6",
+      "title": "工程类（一建/造价/监理）",
+      "title_en": "Engineering exams",
+      "items": [
+        { "name": "示例工程考试站", "url": "https://example.engineer", "note": "一建/造价资料", "stars": null, "vpn": false, "added": "2026-05-18" }
+      ]
+    },
+    {
+      "id": "08-7",
+      "title": "综合（普通话/教资/法考）",
+      "title_en": "General (Mandarin / teaching cert / bar)",
+      "items": [
+        { "name": "示例综合考试站", "url": "https://example.exam", "note": "教资/法考/普通话", "stars": null, "vpn": false, "added": "2026-04-25" }
+      ]
+    }
+  ]
+}

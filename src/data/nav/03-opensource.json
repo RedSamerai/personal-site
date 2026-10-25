@@ -1,0 +1,124 @@
+{
+  "id": "03",
+  "title": "开源项目",
+  "title_en": "Open Source",
+  "subcategories": [
+    {
+      "id": "03-1",
+      "title": "LLM/推理框架",
+      "title_en": "LLM / Inference frameworks",
+      "items": [
+        { "name": "vLLM", "url": "https://github.com/vllm-project/vllm", "note": "高吞吐 LLM 推理引擎", "stars": "40.2k", "vpn": true, "added": "2026-10-18" },
+        { "name": "Ollama", "url": "https://github.com/ollama/ollama", "note": "本地大模型运行器", "stars": "85k", "vpn": true, "added": "2026-09-15" }
+      ]
+    },
+    {
+      "id": "03-2",
+      "title": "RAG/知识管理",
+      "title_en": "RAG / Knowledge management",
+      "items": [
+        { "name": "LangChain", "url": "https://github.com/langchain-ai/langchain", "note": "LLM 应用开发框架", "stars": "100k", "vpn": true, "added": "2026-08-22" },
+        { "name": "RAGFlow", "url": "https://github.com/infiniflow/ragflow", "note": "开源 RAG 引擎", "stars": "28.5k", "vpn": true, "added": "2026-07-19" }
+      ]
+    },
+    {
+      "id": "03-3",
+      "title": "AI 图像/视频",
+      "title_en": "AI image / video",
+      "items": [
+        { "name": "ComfyUI", "url": "https://github.com/comfyanonymous/ComfyUI", "note": "节点式 AI 绘图/视频工作流", "stars": "80k", "vpn": true, "added": "2026-06-08" },
+        { "name": "Wan Video", "url": "https://github.com/Wan-Video/Wan2.1", "note": "开源视频生成模型", "stars": "12k", "vpn": true, "added": "2026-10-25" }
+      ]
+    },
+    {
+      "id": "03-4",
+      "title": "AI 编程工具",
+      "title_en": "AI coding tools",
+      "items": [
+        { "name": "Claude Code", "url": "https://github.com/anthropics/claude-code", "note": "AI 编程终端", "stars": "30k", "vpn": true, "added": "2026-10-23" },
+        { "name": "OpenCode", "url": "https://github.com/anomalyco/opencode", "note": "开源 AI 编程 CLI", "stars": "4.2k", "vpn": true, "added": "2026-10-23" }
+      ]
+    },
+    {
+      "id": "03-5",
+      "title": "Skills/MCP/Agent 生态",
+      "title_en": "Skills / MCP / Agent ecosystem",
+      "items": [
+        { "name": "MCP 官方 SDK", "url": "https://github.com/modelcontextprotocol", "note": "MCP 协议与 SDK", "stars": "15k", "vpn": true, "added": "2026-09-05" },
+        { "name": "a-stock-mcp", "url": "https://github.com/RedSamerai/a-stock-mcp", "note": "A股量化 MCP 服务器，11个工具", "stars": "1.5k", "vpn": true, "added": "2026-10-26" }
+      ]
+    },
+    {
+      "id": "03-6",
+      "title": "工作流/自动化",
+      "title_en": "Workflow / Automation",
+      "items": [
+        { "name": "n8n", "url": "https://github.com/n8n-io/n8n", "note": "可视化工作流自动化", "stars": "120k", "vpn": true, "added": "2026-08-14" },
+        { "name": "Huginn", "url": "https://github.com/huginn/huginn", "note": "自托管自动化机器人", "stars": "40k", "vpn": true, "added": "2026-07-01" }
+      ]
+    },
+    {
+      "id": "03-7",
+      "title": "效率/开发者工具",
+      "title_en": "Productivity / Dev tools",
+      "items": [
+        { "name": "Fleet", "url": "https://github.com/fleet", "note": "AI 原生编辑器", "stars": "3k", "vpn": true, "added": "2026-09-28" },
+        { "name": "Yazi", "url": "https://github.com/sxyazi/yazi", "note": "TUI 文件管理器", "stars": "30k", "vpn": true, "added": "2026-10-22" }
+      ]
+    },
+    {
+      "id": "03-8",
+      "title": "浏览器/扩展",
+      "title_en": "Browsers / Extensions",
+      "items": [
+        { "name": "视频翻译扩展", "url": "https://github.com/RedSamerai/video-summary-extension", "note": "Chrome 本地 Whisper 转写", "stars": null, "vpn": false, "added": "2026-10-19" },
+        { "name": "Selenium IDE", "url": "https://github.com/SeleniumHQ/selenium-ide", "note": "浏览器录制回放测试", "stars": "2k", "vpn": true, "added": "2026-06-25" }
+      ]
+    },
+    {
+      "id": "03-9",
+      "title": "量化/金融",
+      "title_en": "Quant / Finance",
+      "items": [
+        { "name": "backtrader", "url": "https://github.com/mementum/backtrader", "note": "Python 量化回测框架", "stars": "11k", "vpn": true, "added": "2026-08-09" },
+        { "name": "qlib", "url": "https://github.com/microsoft/qlib", "note": "AI 量化平台", "stars": "25k", "vpn": true, "added": "2026-05-30" }
+      ]
+    },
+    {
+      "id": "03-10",
+      "title": "前端/框架",
+      "title_en": "Frontend / Frameworks",
+      "items": [
+        { "name": "Astro", "url": "https://github.com/withastro/astro", "note": "内容驱动的站点构建器", "stars": "50k", "vpn": true, "added": "2026-04-20" },
+        { "name": "SolidJS", "url": "https://github.com/solidjs/solid", "note": "细粒度响应式前端框架", "stars": "30k", "vpn": true, "added": "2026-03-15" }
+      ]
+    },
+    {
+      "id": "03-11",
+      "title": "系统/DevOps",
+      "title_en": "Systems / DevOps",
+      "items": [
+        { "name": "Home Assistant", "url": "https://github.com/home-assistant/core", "note": "自托管智能家居", "stars": "85k", "vpn": true, "added": "2026-02-28" },
+        { "name": "MinIO", "url": "https://github.com/minio/minio", "note": "S3 兼容对象存储", "stars": "45k", "vpn": true, "added": "2026-01-12" }
+      ]
+    },
+    {
+      "id": "03-12",
+      "title": "数据库",
+      "title_en": "Databases",
+      "items": [
+        { "name": "PostgreSQL", "url": "https://github.com/postgres/postgres", "note": "开源关系型数据库", "stars": "25k", "vpn": true, "added": "2025-12-01" },
+        { "name": "Qdrant", "url": "https://github.com/qdrant/qdrant", "note": "向量数据库", "stars": "22k", "vpn": true, "added": "2025-11-15" }
+      ]
+    },
+    {
+      "id": "03-13",
+      "title": "有趣/实验",
+      "title_en": "Fun / Experiments",
+      "items": [
+        { "name": "awesome-mcp-servers", "url": "https://github.com/punkpeye/awesome-mcp-servers", "note": "MCP 服务器清单", "stars": "8k", "vpn": true, "added": "2025-10-20" },
+        { "name": "WebGPU 示例", "url": "https://github.com/nickmccurdy/webgpu", "note": "浏览器图形学实验", "stars": "1.2k", "vpn": true, "added": "2025-09-08" }
+      ]
+    }
+  ]
+}

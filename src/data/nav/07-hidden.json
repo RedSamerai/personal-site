@@ -1,0 +1,39 @@
+{
+  "id": "07",
+  "title": "隐藏/小众",
+  "title_en": "Hidden / Niche",
+  "subcategories": [
+    {
+      "id": "07-1",
+      "title": "宝藏小站",
+      "title_en": "Hidden gems",
+      "items": [
+        { "name": "示例宝藏站", "url": "https://example.gem", "note": "小而美的工具站", "stars": null, "vpn": false, "added": "2026-10-12" }
+      ]
+    },
+    {
+      "id": "07-2",
+      "title": "社区/论坛",
+      "title_en": "Communities / Forums",
+      "items": [
+        { "name": "示例社区", "url": "https://example.forum", "note": "小众技术社区", "stars": null, "vpn": false, "added": "2026-09-05" }
+      ]
+    },
+    {
+      "id": "07-3",
+      "title": "数据/可视化",
+      "title_en": "Data / Visualization",
+      "items": [
+        { "name": "示例可视化", "url": "https://example.data", "note": "公共数据仪表盘", "stars": null, "vpn": false, "added": "2026-08-18" }
+      ]
+    },
+    {
+      "id": "07-4",
+      "title": "实验/艺术",
+      "title_en": "Experiments / Art",
+      "items": [
+        { "name": "示例实验站", "url": "https://example.art", "note": "生成艺术/创意编程", "stars": null, "vpn": true, "added": "2026-07-25" }
+      ]
+    }
+  ]
+}

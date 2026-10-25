@@ -1,0 +1,47 @@
+{
+  "id": "05",
+  "title": "移动端（手机）",
+  "title_en": "Mobile",
+  "subcategories": [
+    {
+      "id": "05-1",
+      "title": "影视/直播",
+      "title_en": "Video / Live",
+      "items": [
+        { "name": "示例影视 App", "url": "https://example.com", "note": "聚合影视资源", "stars": null, "vpn": false, "added": "2026-10-15" }
+      ]
+    },
+    {
+      "id": "05-2",
+      "title": "听歌/有声",
+      "title_en": "Music / Audiobooks",
+      "items": [
+        { "name": "示例听歌 App", "url": "https://example.org", "note": "无损在线听", "stars": null, "vpn": false, "added": "2026-09-08" }
+      ]
+    },
+    {
+      "id": "05-3",
+      "title": "办公/效率",
+      "title_en": "Office / Productivity",
+      "items": [
+        { "name": "示例笔记 App", "url": "https://example.io", "note": "跨端同步", "stars": null, "vpn": false, "added": "2026-08-01" }
+      ]
+    },
+    {
+      "id": "05-4",
+      "title": "学习",
+      "title_en": "Learning",
+      "items": [
+        { "name": "示例学习 App", "url": "https://example.edu", "note": "公开课+AI 答疑", "stars": null, "vpn": false, "added": "2026-07-05" }
+      ]
+    },
+    {
+      "id": "05-5",
+      "title": "摄影/修图",
+      "title_en": "Photo / Editing",
+      "items": [
+        { "name": "示例修图 App", "url": "https://example.photo", "note": "移动端修图+胶片风", "stars": null, "vpn": false, "added": "2026-06-05" }
+      ]
+    }
+  ]
+}

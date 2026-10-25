@@ -1,0 +1,24 @@
+[
+  {
+    "date": "10-26",
+    "items": [
+      "03-5栏：新增 a-stock-mcp 等 1 个 MCP 生态项目",
+      "09-4栏：新增 Fontsource 字体 CDN",
+      "站点重构为导航优先布局，新增 9 个分类"
+    ]
+  },
+  {
+    "date": "10-23",
+    "items": [
+      "03-4栏：新增 Claude Code、OpenCode 等 3 个 AI 编程工具",
+      "01-1栏：更新 2 个免费在线影视站"
+    ]
+  },
+  {
+    "date": "10-18",
+    "items": [
+      "03-1栏：新增 vLLM、Ollama 等 2 个 LLM 推理框架",
+      "06-1栏：新增 Google Scholar 学术检索"
+    ]
+  }
+]

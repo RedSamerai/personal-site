@@ -1,0 +1,42 @@
+{
+  "id": "09",
+  "title": "设计/视频工具",
+  "title_en": "Design / Video Tools",
+  "subcategories": [
+    {
+      "id": "09-1",
+      "title": "设计工具",
+      "title_en": "Design tools",
+      "items": [
+        { "name": "Figma", "url": "https://figma.com", "note": "协作 UI 设计", "stars": null, "vpn": true, "added": "2026-10-05" },
+        { "name": "Affinity", "url": "https://affinity.studio", "note": "一次性买断的设计套件", "stars": null, "vpn": false, "added": "2026-09-12" }
+      ]
+    },
+    {
+      "id": "09-2",
+      "title": "剪辑",
+      "title_en": "Video editing",
+      "items": [
+        { "name": "DaVinci Resolve", "url": "https://blackmagicdesign.com/products/davinciresolve", "note": "免费专业剪辑+调色", "stars": null, "vpn": false, "added": "2026-08-08" },
+        { "name": "CapCut/剪映", "url": "https://www.capcut.com", "note": "移动端为主", "stars": null, "vpn": false, "added": "2026-07-02" }
+      ]
+    },
+    {
+      "id": "09-3",
+      "title": "特效/调色",
+      "title_en": "VFX / Color grading",
+      "items": [
+        { "name": "Natron", "url": "https://natrongithub.io", "note": "开源 Nuke 替代", "stars": null, "vpn": true, "added": "2026-06-01" }
+      ]
+    },
+    {
+      "id": "09-4",
+      "title": "素材（视频/音频/字体）",
+      "title_en": "Assets (video / audio / fonts)",
+      "items": [
+        { "name": "示例素材站", "url": "https://example.assets", "note": "免版权视频/音频", "stars": null, "vpn": false, "added": "2026-05-05" },
+        { "name": "Fontsource", "url": "https://fontsource.org", "note": "开源字体 CDN", "stars": null, "vpn": true, "added": "2026-10-26" }
+      ]
+    }
+  ]
+}

@@ -1,91 +1,17 @@
 ---
 import Layout from '../../components/Layout.astro';
-import en from '../../i18n/en.json';
-
-const works = [
-  { title: 'AI Resume Generator', desc: 'Auto-generates polished resume PDFs from basic info. Multiple templates supported.', tags: ['AI', 'Product'] },
-  { title: 'QuantTrade', desc: 'Quant backtesting framework with vectorized strategy testing and attribution analysis.', tags: ['Quant', 'Python', 'OpenSource'] },
-  { title: 'Chrome Video Translator', desc: 'Local Whisper transcription + auto subtitles, no internet needed.', tags: ['ChromeExt', 'AI', 'OpenSource'] },
-];
-
-const notes = [
-  { date: 'Oct 19, 2026', title: 'On personal websites and identity', href: '#' },
-  { date: 'Oct 12, 2026', title: 'What I learned building 8 tools in 6 months', href: '#' },
-  { date: 'Sep 28, 2026', title: 'The case for boring tech stacks', href: '#' },
-];
+import NavAccordion from '../../components/nav/NavAccordion.astro';
+import Changelog from '../../components/nav/Changelog.astro';
 ---
 
 <Layout lang="en">
+  <section class="py-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <!-- Changelog above the main nav area -->
+      <Changelog />
 
-  <section class="min-h-[85vh] flex items-center">
-    <div class="max-w-5xl mx-auto px-6 w-full">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
-        <div class="fade-in">
-          <p class="font-mono text-accent text-sm mb-6 tracking-wide">// hello, world</p>
-          <h1 class="font-serif text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[0.95] text-fg">{en.name}</h1>
-          <p class="mt-8 text-xl md:text-2xl font-light text-fg-muted leading-relaxed max-w-md">{en.tagline}</p>
-          <p class="mt-5 text-base text-fg-muted leading-relaxed max-w-sm">{en.heroDescription}</p>
-          <div class="mt-10 flex items-center gap-4">
-            <a href="/en/works" class="inline-flex items-center px-5 py-3 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent-hover transition-colors">View Works</a>
-            <a href="/en/about" class="inline-flex items-center px-5 py-3 border border-fg/20 text-fg text-sm font-medium rounded-lg hover:border-fg/40 transition-colors">About</a>
-          </div>
-        </div>
-        <div class="fade-in fade-in-delay-2 hidden md:block">
-          <div class="photo-placeholder relative overflow-hidden">
-            <span class="block text-center px-4">
-              <div class="text-6xl mb-3 opacity-30">👤</div>
-              Portrait Photo<br/>1080×1350
-            </span>
-          </div>
-        </div>
-      </div>
+      <!-- Accordion: categories on the left, content on the right -->
+      <NavAccordion lang="en" />
     </div>
   </section>
-
-  <section id="notes" class="py-24 border-t border-fg/7">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="font-serif text-3xl md:text-4xl font-semibold tracking-tight mb-12 fade-in">Notes & Essays</h2>
-      <div class="space-y-0 fade-in fade-in-delay-1">
-        {notes.map((note) => (
-          <a href={note.href}
-             class="group flex flex-col md:flex-row md:items-baseline gap-1 py-5 border-b border-fg/7 hover:bg-surface/30 -mx-4 px-4 rounded transition-colors">
-            <time class="font-mono text-sm text-fg-subtle min-w-[120px]">{note.date}</time>
-            <span class="font-serif text-lg text-fg group-hover:text-accent-hover transition-colors">{note.title}</span>
-            <span class="text-fg-subtle opacity-0 group-hover:opacity-100 transition-opacity ml-auto font-mono text-sm">↗</span>
-          </a>
-        ))}
-      </div>
-      <div class="mt-8">
-        <a href="#" class="font-mono text-sm text-fg-muted hover:text-accent transition-colors">See all notes →</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-24 border-t border-fg/7">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="flex items-end justify-between mb-12 fade-in">
-        <h2 class="font-serif text-3xl md:text-4xl font-semibold tracking-tight">Recent Works</h2>
-        <a href="/en/works" class="font-mono text-sm text-fg-muted hover:text-accent transition-colors">All →</a>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-in fade-in-delay-1">
-        {works.map((w) => (
-          <a href="/en/works" class="group block border border-fg/10 rounded-xl overflow-hidden hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5 transition-all hover:-translate-y-1">
-            <div class="aspect-[4/3] bg-surface-2 flex items-center justify-center">
-              <span class="text-3xl opacity-20">📷</span>
-            </div>
-            <div class="p-5">
-              <h3 class="font-serif text-xl font-semibold group-hover:text-accent-hover transition-colors">{w.title}</h3>
-              <p class="mt-2 text-sm text-fg-muted leading-relaxed line-clamp-2">{w.desc}</p>
-              <div class="mt-4 flex gap-2 flex-wrap">
-                {w.tags.map((tag) => (
-                  <span class="text-xs font-mono text-fg-subtle bg-surface px-2 py-0.5 rounded">{tag}</span>
-                ))}
-              </div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
 </Layout>

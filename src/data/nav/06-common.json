@@ -1,0 +1,41 @@
+{
+  "id": "06",
+  "title": "常用/高频",
+  "title_en": "Common / Frequent",
+  "subcategories": [
+    {
+      "id": "06-1",
+      "title": "搜索引擎",
+      "title_en": "Search engines",
+      "items": [
+        { "name": "Google Scholar", "url": "https://scholar.google.com", "note": "学术检索", "stars": null, "vpn": true, "added": "2026-09-30" },
+        { "name": "必应", "url": "https://www.bing.com", "note": "国内直连", "stars": null, "vpn": false, "added": "2026-08-20" }
+      ]
+    },
+    {
+      "id": "06-2",
+      "title": "网盘/同步",
+      "title_en": "Cloud storage / Sync",
+      "items": [
+        { "name": "示例网盘 A", "url": "https://example.cloud", "note": "国内直连，速度快", "stars": null, "vpn": false, "added": "2026-07-30" },
+        { "name": "示例网盘 B", "url": "https://example.drive", "note": "国际网盘", "stars": null, "vpn": true, "added": "2026-07-01" }
+      ]
+    },
+    {
+      "id": "06-3",
+      "title": "财经/资讯",
+      "title_en": "Finance / News",
+      "items": [
+        { "name": "示例财经站", "url": "https://example.finance", "note": "行情+研报", "stars": null, "vpn": false, "added": "2026-06-12" }
+      ]
+    },
+    {
+      "id": "06-4",
+      "title": "生活/工具",
+      "title_en": "Life / Tools",
+      "items": [
+        { "name": "示例工具站", "url": "https://example.tools", "note": "日常小工具合集", "stars": null, "vpn": false, "added": "2026-05-10" }
+      ]
+    }
+  ]
+}

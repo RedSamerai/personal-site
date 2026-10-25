@@ -1,0 +1,128 @@
+---
+// 手风琴主组件：左侧分类按钮列表 + 右侧内容区
+// 交互：点击分类展开，再点关闭回到个人信息面板；切换分类前自动滚到顶
+import NavItem from './NavItem.astro';
+import PersonalPanel from './PersonalPanel.astro';
+
+// 9 个分类数据文件
+const video = await import('../../data/nav/01-video.json');
+const books = await import('../../data/nav/02-books.json');
+const opensource = await import('../../data/nav/03-opensource.json');
+const pc = await import('../../data/nav/04-pc.json');
+const mobile = await import('../../data/nav/05-mobile.json');
+const common = await import('../../data/nav/06-common.json');
+const hidden = await import('../../data/nav/07-hidden.json');
+const learning = await import('../../data/nav/08-learning.json');
+const design = await import('../../data/nav/09-design.json');
+
+const categories = [
+  video.default, books.default, opensource.default, pc.default,
+  mobile.default, common.default, hidden.default, learning.default, design.default,
+];
+
+const lang = Astro.props.lang ?? 'zh';
+
+// EN 页面用 title_en（若存在），否则回退中文
+const titleOf = (c) => (lang === 'en' && c.title_en ? c.title_en : c.title);
+const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
+---
+
+<div class="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-6 md:gap-10">
+  <!-- 左侧分类按钮（移动端纵向堆叠在上方） -->
+  <div class="nav-sidebar shrink-0" role="tablist" aria-label="分类">
+    <div class="flex md:flex-col gap-2 overflow-x-auto md:overflow-visible -mx-4 px-4 md:mx-0 md:px-0 md:pb-4 md:sticky md:top-24">
+      {categories.map((c) => (
+        <button
+          type="button"
+          data-cat={c.id}
+          role="tab"
+          class="nav-btn shrink-0 min-w-[180px] md:min-w-0 text-left px-4 py-3 rounded-lg border border-fg/10 hover:border-fg/25 transition-colors flex items-center justify-between gap-2"
+        >
+          <span class="font-mono text-sm font-medium">
+            <span class="text-fg-subtle mr-2">{c.id}</span>
+            <span class="nav-btn-title">{titleOf(c)}</span>
+          </span>
+          <span class="nav-arrow text-fg-subtle text-sm">→</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- 右侧内容区 -->
+  <div class="nav-content min-w-0">
+    <!-- 默认：个人信息面板 -->
+    <div data-panel="profile" class="nav-panel">
+      <PersonalPanel lang={lang} />
+    </div>
+
+    <!-- 各分类内容面板（默认隐藏） -->
+    {categories.map((c) => (
+      <div data-panel={`cat-${c.id}`} class="nav-panel hidden">
+        <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6">{titleOf(c)}</h2>
+        <div class="space-y-8">
+          {c.subcategories.map((sub) => (
+            <div>
+              <h3 class="font-mono text-sm text-fg-muted uppercase tracking-widest mb-3">
+                {sub.id} · {subTitleOf(sub)}
+              </h3>
+              <ul>
+                {sub.items.map((item) => (
+                  <NavItem item={item} subcategoryId={sub.id} lang={lang} />
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // 手风琴切换逻辑：立即显示/隐藏（无 max-height 动画）
+  const btns = document.querySelectorAll('.nav-btn');
+  const panels = document.querySelectorAll('.nav-panel');
+  const arrows = document.querySelectorAll('.nav-arrow');
+
+  btns.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      const catId = btn.dataset.cat;
+      const isActive = btn.classList.contains('active');
+
+      // 全部重置
+      btns.forEach((b) => {
+        b.classList.remove('active', 'border-accent/40', 'bg-surface');
+        b.setAttribute('aria-selected', 'false');
+      });
+      arrows.forEach((a) => { a.textContent = '→'; a.classList.remove('rotate-90', 'text-accent'); });
+      panels.forEach((p) => p.classList.add('hidden'));
+
+      if (isActive) {
+        // 再次点击已展开的 → 关闭，回到个人信息面板
+        document.querySelector('[data-panel="profile"]').classList.remove('hidden');
+        return;
+      }
+
+      // 展开该分类
+      btn.classList.add('active', 'border-accent/40', 'bg-surface');
+      btn.setAttribute('aria-selected', 'true');
+      arrows[i].textContent = '↓';
+      arrows[i].classList.add('rotate-0', 'text-accent');
+      document.querySelector(`[data-panel="cat-${catId}"]`).classList.remove('hidden');
+
+      // 移动端：切到分类后滚到内容区顶部
+      if (window.innerWidth < 768) {
+        document.querySelector('.nav-content').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+<style>
+  .nav-btn.active {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
+    background: var(--color-surface);
+  }
+  .nav-btn .nav-arrow { transition: transform 0.2s ease, color 0.2s ease; }
+  .nav-btn.active .nav-arrow { transform: rotate(90deg); color: var(--color-accent); }
+</style>
