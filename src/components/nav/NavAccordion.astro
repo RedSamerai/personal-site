@@ -28,8 +28,8 @@ const titleOf = (c) => (lang === 'en' && c.title_en ? c.title_en : c.title);
 const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
 ---
 
-<div class="nav-acc">
-  <!-- 左侧：桌面端一级分类按钮；移动端纵向堆叠（最朴素） -->
+<div class="nav-acc grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 md:gap-8 items-start">
+  <!-- 左侧：一级大项按钮（桌面固定 240px 宽；移动端纵向堆叠在上方） -->
   <div class="nav-sidebar shrink-0" role="tablist" aria-label="分类">
     <div class="flex flex-col gap-2 md:sticky md:top-24">
       {categories.map((c) => (
