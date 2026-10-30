@@ -20,6 +20,9 @@ const t = {
   zh: { vpn: '🔓 需科学上网', report: '失效反馈' },
   en: { vpn: '🔓 VPN required', report: 'Report broken' },
 }[lang];
+
+// EN 页显示英文说明 note_en，否则显示中文 note
+const noteText = lang === 'en' ? (item.note_en || item.note) : item.note;
 ---
 
 <li class="group/item flex items-start gap-2 py-2.5 border-b border-fg/7 last:border-0">
@@ -48,8 +51,8 @@ const t = {
         </span>
       )}
     </div>
-    {item.note && (
-      <p class="mt-0.5 text-sm text-fg-subtle leading-relaxed">{item.note}</p>
+    {noteText && (
+      <p class="mt-0.5 text-sm text-fg-subtle leading-relaxed">{noteText}</p>
     )}
   </div>
   <a

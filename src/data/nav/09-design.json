@@ -8,8 +8,10 @@
       "title": "设计工具",
       "title_en": "Design tools",
       "items": [
-        { "name": "Figma", "url": "https://figma.com", "note": "协作 UI 设计", "stars": null, "vpn": true, "added": "2026-10-05" },
-        { "name": "Affinity", "url": "https://affinity.studio", "note": "一次性买断的设计套件", "stars": null, "vpn": false, "added": "2026-09-12" }
+        { "name": "Figma", "url": "https://figma.com", "note": "协作 UI 设计", "note_en": "Collaborative UI design", "stars": null, "vpn": true, "added": "2026-10-05" },
+        { "name": "Affinity", "url": "https://affinity.studio", "note": "一次性买断的设计套件", "note_en": "One-time-purchase design suite", "stars": null, "vpn": false, "added": "2026-09-12" },
+        { "name": "Inkscape", "url": "https://inkscape.org", "note": "开源矢量绘图（Illustrator 替代）", "note_en": "Open vector graphics (Illustrator alt)", "stars": "1k", "vpn": false, "added": "2026-10-30" },
+        { "name": "GIMP", "url": "https://www.gimp.org", "note": "开源修图（Photoshop 替代）", "note_en": "Open image editor (Photoshop alt)", "stars": null, "vpn": false, "added": "2026-10-30" }
       ]
     },
     {
@@ -17,8 +19,10 @@
       "title": "剪辑",
       "title_en": "Video editing",
       "items": [
-        { "name": "DaVinci Resolve", "url": "https://blackmagicdesign.com/products/davinciresolve", "note": "免费专业剪辑+调色", "stars": null, "vpn": false, "added": "2026-08-08" },
-        { "name": "CapCut/剪映", "url": "https://www.capcut.com", "note": "移动端为主", "stars": null, "vpn": false, "added": "2026-07-02" }
+        { "name": "DaVinci Resolve", "url": "https://blackmagicdesign.com/products/davinciresolve", "note": "免费专业剪辑+调色", "note_en": "Free pro NLE + color", "stars": null, "vpn": false, "added": "2026-08-08", "featured": true },
+        { "name": "Kdenlive", "url": "https://kdenlive.org", "note": "开源非线性剪辑器", "note_en": "Open-source non-linear editor", "stars": "4k", "vpn": false, "added": "2026-10-30" },
+        { "name": "Shotcut", "url": "https://shotcut.org", "note": "轻量开源剪辑器", "note_en": "Lightweight open-source NLE", "stars": "3k", "vpn": false, "added": "2026-10-30" },
+        { "name": "FFmpeg", "url": "https://ffmpeg.org", "note": "音视频处理核心（命令行）", "note_en": "AV processing core (CLI)", "stars": "20k", "vpn": false, "added": "2026-10-30" }
       ]
     },
     {
@@ -26,7 +30,8 @@
       "title": "特效/调色",
       "title_en": "VFX / Color grading",
       "items": [
-        { "name": "Natron", "url": "https://natrongithub.io", "note": "开源 Nuke 替代", "stars": null, "vpn": true, "added": "2026-06-01" }
+        { "name": "Natron", "url": "https://natrongithub.io", "note": "开源 Nuke 替代（节点式 VFX）", "note_en": "Open Nuke alternative (node VFX)", "stars": "1k", "vpn": true, "added": "2026-06-01" },
+        { "name": "Blender", "url": "https://www.blender.org", "note": "开源 3D/合成/动画", "note_en": "Open 3D / compositing / animation", "stars": "15k", "vpn": false, "added": "2026-10-30" }
       ]
     },
     {
@@ -34,8 +39,8 @@
       "title": "素材（视频/音频/字体）",
       "title_en": "Assets (video / audio / fonts)",
       "items": [
-        { "name": "示例素材站", "url": "https://example.assets", "note": "免版权视频/音频", "stars": null, "vpn": false, "added": "2026-05-05" },
-        { "name": "Fontsource", "url": "https://fontsource.org", "note": "开源字体 CDN", "stars": null, "vpn": true, "added": "2026-10-26" }
+        { "name": "Fontsource", "url": "https://fontsource.org", "note": "开源字体 CDN", "note_en": "Open-source font CDN", "stars": "8k", "vpn": true, "added": "2026-10-26" },
+        { "name": "YouTube Audio Library", "url": "https://www.youtube.com/audiolibrary", "note": "免版权音乐/音效", "note_en": "Copyright-free music & SFX", "stars": null, "vpn": true, "added": "2026-10-30" }
       ]
     }
   ]
