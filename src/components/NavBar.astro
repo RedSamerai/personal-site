@@ -1,6 +1,7 @@
 ---
 const { lang = 'zh' } = Astro.props;
 import LanguageSwitch from './LanguageSwitch.astro';
+import ThemeToggle from './ThemeToggle.astro';
 
 const nav = {
   zh: { about: '关于' },
@@ -23,6 +24,9 @@ const prefix = lang === 'en' ? '/en' : '';
       </li>
       <li>
         <LanguageSwitch lang={lang} />
+      </li>
+      <li>
+        <ThemeToggle />
       </li>
     </ul>
   </nav>

@@ -28,6 +28,20 @@
   color-scheme: dark;
 }
 
+/* ── 亮色主题覆盖（data-theme="light"） ── */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef0f3;
+  --color-fg: #1a2027;
+  --color-fg-muted: #5b6470;
+  --color-fg-subtle: #8b93a0;
+  --color-accent: #2563eb;
+  --color-accent-hover: #1d4ed8;
+  --color-border: rgba(15, 23, 30, 0.09);
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -41,6 +55,10 @@ body {
 ::selection {
   background: rgba(59, 130, 246, 0.3);
   color: #e8e6e1;
+}
+[data-theme="light"] ::selection {
+  background: rgba(37, 99, 235, 0.25);
+  color: #1a2027;
 }
 
 /* ── 滚动渐显动画 ── */

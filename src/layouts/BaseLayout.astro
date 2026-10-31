@@ -15,8 +15,8 @@ import '../styles/global.css';
       (function() {
         try {
           const saved = localStorage.getItem('theme');
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const theme = saved || (prefersDark ? 'dark' : 'light');
+          // 默认深色，不跟随系统
+          const theme = saved || 'dark';
           document.documentElement.setAttribute('data-theme', theme);
         } catch (e) {}
       })();
