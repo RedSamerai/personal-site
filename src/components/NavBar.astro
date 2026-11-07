@@ -11,14 +11,16 @@ const t = nav[lang];
 const prefix = lang === 'en' ? '/en' : '';
 ---
 
-<header class="fixed top-0 inset-x-0 z-50 border-b border-fg/7">
+<header class="fixed top-0 inset-x-0 z-50 border-b border-white/10 bg-white/8 backdrop-blur-[40px] backdrop-saturate-[180%]">
   <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href={prefix + '/'} class="font-serif text-xl font-semibold tracking-tight hover:text-fg-muted transition-colors">
+    <a href={prefix + '/'}
+       class="font-serif text-xl font-semibold tracking-tight text-white hover:text-white/70 transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
       RS
     </a>
     <ul class="flex items-center gap-6">
       <li>
-        <a href={prefix + '/about'} class="text-sm font-medium text-fg-muted hover:text-fg transition-colors">
+        <a href={prefix + '/about'}
+           class="text-sm font-medium text-white/80 hover:text-white hover:bg-white/8 rounded-2xl px-3 py-1.5 transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
           {t.about}
         </a>
       </li>

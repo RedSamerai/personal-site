@@ -1,22 +1,40 @@
 ---
-// 更新日志：显示 changelog.json 最新 3 条
-// 横向布局，每条：✅ {date}  {items[0]}...
+// 更新日志（Nocturne 玻璃列表）：显示 changelog.json 最新 3 条
+// 最新一条（今天）显示香槟金「今日更新」徽章
 import changelog from '../../data/nav/changelog.json';
 
 const latest = changelog.slice(0, 3);
+
+// 判断最新一条是否为「今日」（按 MM-DD 比对，年份不敏感）
+function isToday(dateStr: string) {
+  const now = new Date();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  return dateStr === `${m}-${d}`;
+}
 ---
 
-<div class="mb-10">
-  <h2 class="text-xs font-mono text-fg-subtle uppercase tracking-widest mb-3 fade-in">
-    Changelog
-  </h2>
-  <div class="space-y-2">
-    {latest.map((entry) => (
-      <div class="text-xs text-fg-subtle font-mono flex items-start gap-2">
-        <span class="shrink-0 text-emerald-400/70">✅</span>
-        <span class="shrink-0 text-fg-muted">{entry.date}</span>
-        <span class="truncate">{entry.items[0]}</span>
-      </div>
-    ))}
+<div class="glass-card p-5 md:p-6 mb-10">
+  <div class="relative z-10">
+    <div class="flex items-center gap-3 mb-4">
+      <h2 class="text-xs font-mono text-white/40 uppercase tracking-widest">Changelog</h2>
+      {isToday(latest[0]?.date ?? '') && (
+        <span class="text-xs font-mono bg-[#E4B863]/15 border border-[#E4B863]/40 text-[#F3DCA8] rounded-2xl px-2.5 py-0.5">
+          今日更新
+        </span>
+      )}
+    </div>
+    <div class="space-y-2">
+      {latest.map((entry, i) => (
+        <div
+          key={entry.date}
+          class="text-xs text-white/60 font-mono flex items-start gap-2"
+        >
+          <span class="shrink-0 text-white/40">·</span>
+          <span class="shrink-0 text-[#E4B863]">{entry.date}</span>
+          <span class="truncate text-white/80">{entry.items[0]}</span>
+        </div>
+      ))}
+    </div>
   </div>
 </div>

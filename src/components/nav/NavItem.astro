@@ -1,5 +1,5 @@
 ---
-// 单个导航条目渲染组件
+// 单个导航条目渲染组件（Nocturne 玻璃卡片）
 // props: item, subcategoryId, lang（zh/en）
 const { item, subcategoryId, lang = 'zh' } = Astro.props;
 
@@ -10,7 +10,7 @@ const issueUrl =
   `&body=` +
   encodeURIComponent(`链接已失效`);
 
-// 新增加入：added 距今 < 14 天显示绿点
+// 新增加入：added 距今 < 14 天显示香槟金圆点
 const addedDate = item.added ? new Date(item.added + 'T00:00:00') : null;
 const isNew = addedDate
   ? (Date.now() - addedDate.getTime()) / 86400000 < 14
@@ -25,34 +25,37 @@ const t = {
 const noteText = lang === 'en' ? (item.note_en || item.note) : item.note;
 ---
 
-<li class="group/item flex items-start gap-2 py-2.5 border-b border-fg/7 last:border-0">
-  <div class="flex-1 min-w-0">
+<li class="glass-card group/item flex items-start gap-3 p-5 md:p-6">
+  <div class="flex-1 min-w-0 relative z-10">
     <div class="flex items-center gap-2 flex-wrap">
       <a
         href={item.url}
         target="_blank"
         rel="noopener noreferrer"
-        class="font-medium text-fg hover:text-accent-hover transition-colors break-all"
+        class="font-medium text-white hover:text-[#F3DCA8] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] break-all focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl"
       >
         {item.name}
       </a>
       {item.stars && (
-        <span class="text-xs font-mono text-fg-subtle">⭐ {item.stars}</span>
+        <span class="text-xs font-mono text-[#E4B863]">⭐ {item.stars}</span>
       )}
       {item.vpn && (
-        <span class="text-xs font-mono text-amber-400/90 bg-amber-400/10 border border-amber-400/20 rounded px-1.5 py-0.5">
+        <span class="text-xs font-mono text-white/60 bg-white/8 border border-white/15 rounded-2xl px-2 py-0.5">
           {t.vpn}
         </span>
       )}
       {isNew && (
-        <span class="relative flex w-2 h-2" title="新增加入（14天内）">
-          <span class="absolute inline-flex w-full h-full rounded-full bg-emerald-400 opacity-60"></span>
-          <span class="relative inline-flex w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span
+          class="relative flex w-2 h-2"
+          title="新增加入（14天内）"
+        >
+          <span class="absolute inline-flex w-full h-full rounded-full bg-[#E4B863] opacity-60"></span>
+          <span class="relative inline-flex w-2 h-2 rounded-full bg-[#E4B863]"></span>
         </span>
       )}
     </div>
     {noteText && (
-      <p class="mt-0.5 text-sm text-fg-subtle leading-relaxed">{noteText}</p>
+      <p class="mt-1.5 text-sm text-white/60 leading-relaxed max-w-[65ch]">{noteText}</p>
     )}
   </div>
   <a
@@ -61,7 +64,7 @@ const noteText = lang === 'en' ? (item.note_en || item.note) : item.note;
     rel="noopener noreferrer"
     aria-label={t.report}
     title={t.report}
-    class="shrink-0 text-fg-subtle hover:text-red-400 transition-colors text-sm opacity-0 group-hover/item:opacity-100"
+    class="relative z-10 shrink-0 text-white/40 hover:text-[#E4B863] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] text-sm opacity-0 group-hover/item:opacity-100 focus:opacity-100 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl"
   >
     ⚠
   </a>

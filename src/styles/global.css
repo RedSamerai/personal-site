@@ -1,45 +1,48 @@
 @import "tailwindcss";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
-@import "@fontsource/playfair-display/400.css";
+
+/* ── 字体：Manrope（拉丁正文）+ Noto Sans SC（中文正文）+ Playfair Display（标题）+ Noto Serif SC（中文标题兜底） ── */
+@import "@fontsource/manrope/400.css";
+@import "@fontsource/manrope/500.css";
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+@import "@fontsource/noto-sans-sc/400.css";
+@import "@fontsource/noto-sans-sc/500.css";
+@import "@fontsource/noto-sans-sc/700.css";
+@import "@fontsource/playfair-display/500.css";
 @import "@fontsource/playfair-display/600.css";
 @import "@fontsource/playfair-display/700.css";
+@import "@fontsource/noto-serif-sc/500.css";
+@import "@fontsource/noto-serif-sc/600.css";
+@import "@fontsource/noto-serif-sc/700.css";
 
 @theme {
-  /* ── 深色主题（默认） ── */
-  --color-bg: #0f1419;
-  --color-surface: #1a2028;
-  --color-surface-2: #222b36;
-  --color-fg: #e8e6e1;
-  --color-fg-muted: #8a8f98;
-  --color-fg-subtle: #5c6168;
-  --color-accent: #3b82f6;
-  --color-accent-hover: #60a5fa;
-  --color-border: rgba(255, 255, 255, 0.07);
+  /* ── Nocturne 夜景 token ── */
+  --c-bg: #0b1322;
+  --c-bg-deep: #060a13;
+  --c-lift: #16233a;
+  --c-well: #33517a;
+  --c-moon: #7c9cc4;
+  --c-gold: #e4b863;
+  --c-gold-bright: #f3dca8;
 
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  /* Tailwind 工具类 token：bg-bg / text-fg / text-fg-muted / text-fg-subtle / accent（香槟金） */
+  --color-bg: #0b1322;
+  --color-surface: #16233a;
+  --color-surface-2: #33517a;
+  --color-fg: #e8e6e1;
+  --color-fg-muted: #aab4c4;
+  --color-fg-subtle: #76829a;
+  --color-accent: #e4b863;
+  --color-accent-hover: #f3dca8;
+
+  --font-serif: "Playfair Display", "Noto Serif SC", Georgia, serif;
+  --font-sans: "Manrope", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 :root {
   color-scheme: dark;
-}
-
-/* ── 亮色主题覆盖（data-theme="light"） ── */
-[data-theme="light"] {
-  color-scheme: light;
-  --color-bg: #f6f7f9;
-  --color-surface: #ffffff;
-  --color-surface-2: #eef0f3;
-  --color-fg: #1a2027;
-  --color-fg-muted: #5b6470;
-  --color-fg-subtle: #8b93a0;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-border: rgba(15, 23, 30, 0.09);
+  background-color: var(--c-bg-deep);
 }
 
 html {
@@ -48,13 +51,33 @@ html {
 }
 
 body {
-  @apply bg-bg text-fg font-sans antialiased leading-relaxed;
+  @apply bg-bg text-fg font-sans antialiased;
   font-feature-settings: "kern", "liga";
+  min-height: 100vh;
 }
 
+/* ── 全屏颗粒噪点（SVG feTurbulence，固定铺底，opacity 0.025） ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* 亮色主题（保留主题切换）：浅底弱化光斑，玻璃面板仍可读 */
+[data-theme="light"] .nocturne-wells > div { opacity: 0.4; }
+
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #e8e6e1;
+  background: rgba(228, 184, 99, 0.35);
+  color: #060a13;
+}
+[data-theme="light"] ::selection {
+  background: rgba(37, 99, 235, 0.25);
+  color: #1a2027;
 }
 [data-theme="light"] ::selection {
   background: rgba(37, 99, 235, 0.25);
@@ -68,10 +91,7 @@ body {
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
 
 /* stagger 延迟（与内联 transition-delay 二选一使用，内联优先级更高） */
 .fade-in-delay-1 { transition-delay: 0.1s; }
@@ -86,4 +106,76 @@ body {
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+/* ── 玻璃卡片通用类（三层方向性阴影：外层深度 + 顶边 inset 高光 + 底边 inset 暗缘） ── */
+.glass-card {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem; /* rounded-3xl */
+  box-shadow: 0 16px 40px rgba(3, 7, 18, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.22),
+              inset 0 -1px 0 rgba(2, 6, 16, 0.35);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@media (min-width: 768px) {
+  .glass-card { backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); }
+}
+@media (max-width: 767px) {
+  .glass-card {
+    backdrop-filter: blur(30px) saturate(180%);
+    -webkit-backdrop-filter: blur(30px) saturate(180%);
+    box-shadow: 0 8px 24px rgba(3, 7, 18, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+}
+.glass-card::before {
+  /* 内发光：顶边受光 */
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.12), transparent 40%);
+  pointer-events: none;
+}
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 64px rgba(3, 7, 18, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.32),
+              inset 0 -1px 0 rgba(2, 6, 16, 0.35);
+}
+.glass-card:active { transform: translateY(-4px) scale(0.97); }
+
+/* 香槟金主 CTA */
+.btn-gold {
+  position: relative;
+  background-color: rgba(228, 184, 99, 0.15);
+  border: 1px solid rgba(228, 184, 99, 0.4);
+  color: var(--c-gold-bright);
+  box-shadow: 0 4px 20px rgba(228, 184, 99, 0.15), inset 0 1px 0 rgba(243, 220, 168, 0.35);
+  transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-gold:hover {
+  background-color: rgba(228, 184, 99, 0.22);
+  border-color: rgba(228, 184, 99, 0.55);
+  transform: translateY(-2px);
+}
+
+/* ── 减动效兜底 ── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  .glass-card, .glass-card:hover, .glass-card:active, .btn-gold, .btn-gold:hover {
+    transition: none;
+    transform: none;
+  }
 }

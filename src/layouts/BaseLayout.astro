@@ -15,7 +15,7 @@ import '../styles/global.css';
       (function() {
         try {
           const saved = localStorage.getItem('theme');
-          // 默认深色，不跟随系统
+          // 默认深色（Nocturne 夜景），不跟随系统
           const theme = saved || 'dark';
           document.documentElement.setAttribute('data-theme', theme);
         } catch (e) {}
@@ -23,7 +23,18 @@ import '../styles/global.css';
     </script>
   </head>
   <body class="min-h-screen flex flex-col bg-bg text-fg">
+    <!-- 背景光斑层（fixed，在玻璃面板之下，玻璃才有东西可模糊） -->
+    <div aria-hidden="true" class="nocturne-wells fixed inset-0 -z-10 pointer-events-none overflow-hidden">
+      <div class="absolute -top-32 -right-20 w-[560px] h-[560px] rounded-full"
+           style="background: radial-gradient(circle, rgba(124,156,196,0.28) 0%, transparent 65%)"></div>
+      <div class="absolute -bottom-36 -left-24 w-[520px] h-[520px] rounded-full"
+           style="background: radial-gradient(circle, rgba(51,81,122,0.35) 0%, transparent 65%)"></div>
+      <div class="absolute top-[35%] left-[45%] w-[480px] h-[480px] rounded-full"
+           style="background: radial-gradient(circle, rgba(228,184,99,0.10) 0%, transparent 60%)"></div>
+    </div>
+
     <slot />
+
     <script>
       (function() {
         try {

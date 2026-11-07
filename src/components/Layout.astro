@@ -8,6 +8,11 @@ const footer = {
   en: '© 2026 RedSamerai · Built with Astro & Tailwind',
 };
 const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
+
+const t = {
+  zh: { tagline: '深墨夜景 · 香槟金 · 玻璃拟态', nav: '导航', social: '社交' },
+  en: { tagline: 'Nocturne glassmorphism', nav: 'Nav', social: 'Social' },
+}[lang];
 ---
 
 <BaseLayout htmlLang={htmlLang}>
@@ -15,13 +20,37 @@ const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
   <main class="flex-1 pt-16">
     <slot />
   </main>
-  <footer class="border-t border-fg/7 py-8 mt-24">
-    <div class="max-w-5xl mx-auto px-6 flex items-center justify-between">
-      <p class="text-xs text-fg-subtle font-mono">{footer[lang]}</p>
-      <a href="https://github.com/RedSamerai" target="_blank" rel="noopener noreferrer"
-         class="text-xs text-fg-subtle font-mono hover:text-accent transition-colors">
-        GitHub ↗
-      </a>
+  <footer class="border-t border-white/10 bg-white/12 backdrop-blur-[60px] backdrop-saturate-[180%] py-10 mt-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <span class="font-serif text-xl font-semibold text-white">RedSamerai</span>
+          <p class="mt-2 text-xs text-white/60">{t.tagline}</p>
+        </div>
+        <div>
+          <h4 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">{t.nav}</h4>
+          <ul class="space-y-1.5 text-sm">
+            <li><a href={lang === 'en' ? '/en/' : '/'} class="text-white/80 hover:text-white transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">首页 / Home</a></li>
+            <li><a href={lang === 'en' ? '/en/about' : '/about'} class="text-white/80 hover:text-white transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">关于 / About</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">{t.social}</h4>
+          <ul class="space-y-1.5 text-sm">
+            <li>
+              <a
+                href="https://github.com/RedSamerai"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-white/80 hover:text-[#F3DCA8] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+              >
+                GitHub ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="mt-8 pt-6 border-t border-white/10 text-xs text-white/40 font-mono">{footer[lang]}</p>
     </div>
   </footer>
 </BaseLayout>

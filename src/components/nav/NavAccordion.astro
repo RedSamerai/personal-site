@@ -37,13 +37,13 @@ const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
           type="button"
           data-l1={c.id}
           role="tab"
-          class="l1-btn text-left px-4 py-3 rounded-lg border border-fg/10 hover:border-fg/25 transition-colors flex items-center justify-between gap-2"
+          class="l1-btn text-left px-4 py-3 rounded-2xl border border-white/15 hover:border-white/30 bg-white/6 backdrop-blur-[30px] md:backdrop-blur-[40px] backdrop-saturate-[180%] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between gap-2 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)]"
         >
-          <span class="font-mono text-sm font-medium">
-            <span class="text-fg-subtle mr-2">{c.id}</span>
+          <span class="font-mono text-sm font-medium text-white/80">
+            <span class="text-white/40 mr-2">{c.id}</span>
             <span class="l1-title">{titleOf(c)}</span>
           </span>
-          <span class="l1-arrow text-fg-subtle text-sm">→</span>
+          <span class="l1-arrow text-white/40 text-sm">→</span>
         </button>
       ))}
     </div>
@@ -60,19 +60,19 @@ const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
       <div data-cat={c.id} class="acc-cat hidden">
         <!-- 二级：小项按钮列表（选中一级后默认显示） -->
         <div data-l1-active={c.id} class="l1-list">
-          <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6">{titleOf(c)}</h2>
+          <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6 text-white">{titleOf(c)}</h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {c.subcategories.map((s) => (
               <button
                 type="button"
                 data-l2={s.id}
-                class="l2-btn text-left px-3.5 py-2.5 rounded-lg border border-fg/10 hover:border-fg/20 transition-colors flex items-center justify-between gap-2"
+                class="l2-btn text-left px-4 py-3 rounded-2xl border border-white/15 hover:border-white/30 bg-white/6 backdrop-blur-[30px] md:backdrop-blur-[40px] backdrop-saturate-[180%] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between gap-2 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)]"
               >
-                <span class="font-mono text-xs font-medium">
-                  <span class="text-fg-subtle mr-1.5">{s.id}</span>
-                  <span class="l2-title text-sm">{subTitleOf(s)}</span>
+                <span class="font-mono text-xs font-medium text-white/80">
+                  <span class="text-white/40 mr-1.5">{s.id}</span>
+                  <span class="l2-title text-sm text-white/80">{subTitleOf(s)}</span>
                 </span>
-                <span class="l2-arrow text-fg-subtle text-xs">→</span>
+                <span class="l2-arrow text-white/40 text-xs">→</span>
               </button>
             ))}
           </div>
@@ -82,18 +82,18 @@ const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
         {c.subcategories.map((s) => (
           <div data-l2-panel={s.id} class="l2-panel hidden">
             <div class="flex items-center justify-between mb-5">
-              <h3 class="font-mono text-sm text-fg-muted uppercase tracking-widest">
+              <h3 class="font-mono text-sm text-white/60 uppercase tracking-widest">
                 {s.id} · {subTitleOf(s)}
               </h3>
               <button
                 type="button"
                 data-l2-close={s.id}
-                class="l2-close font-mono text-xs text-fg-subtle hover:text-fg-muted transition-colors"
+                class="l2-close font-mono text-xs text-white/40 hover:text-white/80 transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl"
               >
                 收起 ↑
               </button>
             </div>
-            <ul>
+            <ul class="space-y-4">
               {s.items.map((item) => (
                 <NavItem item={item} subcategoryId={s.id} lang={lang} />
               ))}
@@ -221,15 +221,15 @@ const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
 </script>
 
 <style>
-  .l1-btn { transition: border-color .2s ease, background .2s ease; }
+  /* 一级选中：香槟金描边 + 玻璃底提亮 + 左移指示 */
   .l1-btn.l1-active {
-    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent);
-    background: var(--color-surface);
+    border-color: rgba(228, 184, 99, 0.4);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
   }
-  .l2-btn { transition: border-color .2s ease, background .2s ease; }
   .l2-btn.l2-active {
-    border-color: color-mix(in srgb, var(--color-accent) 30%, transparent);
-    background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+    border-color: rgba(228, 184, 99, 0.4);
+    background-color: rgba(255, 255, 255, 0.1);
   }
-  .l1-arrow, .l2-arrow { transition: transform .2s ease, color .2s ease; }
+  .l1-arrow, .l2-arrow { transition: transform 0.2s ease, color 0.5s cubic-bezier(0.16,1,0.3,1); }
 </style>
