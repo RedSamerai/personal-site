@@ -38,12 +38,12 @@ const aboutHref = Astro.props.lang === 'en' ? '/en/about' : '/about';
 
     <!-- 右：作品列表（60%） -->
     <div class="md:col-span-3">
-      <h2 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-4">
+      <h2 class="text-sm text-white/60 mb-4">
         {t.projects}
       </h2>
-      <ul class="space-y-3">
+      <ul class="space-y-4 md:space-y-3">
         {profile.projects.map((p) => (
-          <li class="flex items-start gap-2">
+          <li class="flex items-start gap-2 leading-relaxed">
             {p.url ? (
               <a
                 href={p.url}

@@ -45,6 +45,55 @@
   background-color: var(--c-bg-deep);
 }
 
+/* 亮色主题下背景底色跟随 token（避免 body 锁死深色） */
+body { background-color: var(--c-bg-deep); }
+[data-theme="light"] body { background-color: var(--c-bg-deep); }
+
+/* ── 亮色主题：覆盖所有 Nocturne token，让主题切换真正生效 ── */
+[data-theme="light"] {
+  color-scheme: light;
+  --c-bg: #f6f7f9;
+  --c-bg-deep: #eef0f3;
+  --c-lift: #ffffff;
+  --c-well: #8ba3c7;
+  --c-moon: #5b7ba6;
+  --c-gold: #b08540;
+  --c-gold-bright: #8a6524;
+
+  --color-bg: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-2: #eef0f3;
+  --color-fg: #1a2027;
+  --color-fg-muted: #5b6470;
+  --color-fg-subtle: #8b93a0;
+  --color-accent: #b08540;
+  --color-accent-hover: #8a6524;
+}
+
+/* 亮色主题：组件里硬编码的 text-white / border-white 反转（白字在浅底上不可读） */
+[data-theme="light"] .text-white { color: #1a2027; }
+[data-theme="light"] .text-white\/90 { color: rgba(26, 32, 39, 0.9); }
+[data-theme="light"] .text-white\/80 { color: rgba(26, 32, 39, 0.8); }
+[data-theme="light"] .text-white\/60 { color: rgba(26, 32, 39, 0.6); }
+[data-theme="light"] .text-white\/40 { color: rgba(26, 32, 39, 0.45); }
+[data-theme="light"] .hover\:text-white:hover { color: #1a2027; }
+[data-theme="light"] .hover\:text-white\/70:hover { color: rgba(26, 32, 39, 0.7); }
+[data-theme="light"] .border-white\/10 { border-color: rgba(15, 23, 30, 0.1); }
+[data-theme="light"] .border-white\/15 { border-color: rgba(15, 23, 30, 0.12); }
+[data-theme="light"] .hover\:border-white\/30:hover { border-color: rgba(15, 23, 30, 0.3); }
+[data-theme="light"] .bg-white\/8 { background-color: rgba(255, 255, 255, 0.5); }
+[data-theme="light"] .bg-white\/12 { background-color: rgba(255, 255, 255, 0.65); }
+[data-theme="light"] .bg-white\/6 { background-color: rgba(255, 255, 255, 0.45); }
+/* 金色徽章/标签（深香槟在浅底不可读）：亮色主题下改深棕描边 */
+[data-theme="light"] .bg-\[\#E4B863\]\/15 { background-color: rgba(176, 133, 64, 0.15); }
+[data-theme="light"] .border-\[\#E4B863\]\/40 { border-color: rgba(176, 133, 64, 0.5); }
+[data-theme="light"] .text-\[\#F3DCA8\] { color: #8a6524; }
+[data-theme="light"] .text-\[\#E4B863\] { color: #b08540; }
+/* 玻璃面板内发光/内阴影在浅底上改用淡灰 */
+[data-theme="light"] .glass-card::before {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), transparent 40%);
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -74,10 +123,6 @@ body::after {
 ::selection {
   background: rgba(228, 184, 99, 0.35);
   color: #060a13;
-}
-[data-theme="light"] ::selection {
-  background: rgba(37, 99, 235, 0.25);
-  color: #1a2027;
 }
 [data-theme="light"] ::selection {
   background: rgba(37, 99, 235, 0.25);
@@ -124,6 +169,23 @@ body::after {
               border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
               background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
+/* 亮色主题：玻璃改为浅灰 + 柔和阴影（深阴影在浅底上过重） */
+[data-theme="light"] .glass-card {
+  background-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(15, 23, 30, 0.12);
+  box-shadow: 0 16px 40px rgba(15, 23, 30, 0.12),
+              inset 0 1px 0 rgba(255, 255, 255, 0.9),
+              inset 0 -1px 0 rgba(15, 23, 30, 0.08);
+}
+[data-theme="light"] .glass-card:hover {
+  border-color: rgba(15, 23, 30, 0.25);
+  box-shadow: 0 24px 64px rgba(15, 23, 30, 0.18),
+              inset 0 1px 0 rgba(255, 255, 255, 0.95),
+              inset 0 -1px 0 rgba(15, 23, 30, 0.1);
+}
+[data-theme="light"] .glass-card::before {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent 40%);
+}
 @media (min-width: 768px) {
   .glass-card { backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); }
 }
@@ -153,20 +215,21 @@ body::after {
 }
 .glass-card:active { transform: translateY(-4px) scale(0.97); }
 
-/* 香槟金主 CTA */
+/* 香槟金主 CTA（颜色走变量，亮色主题自动换成深香槟） */
 .btn-gold {
   position: relative;
-  background-color: rgba(228, 184, 99, 0.15);
-  border: 1px solid rgba(228, 184, 99, 0.4);
+  background-color: color-mix(in srgb, var(--c-gold) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-gold) 40%, transparent);
   color: var(--c-gold-bright);
-  box-shadow: 0 4px 20px rgba(228, 184, 99, 0.15), inset 0 1px 0 rgba(243, 220, 168, 0.35);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--c-gold) 15%, transparent),
+              inset 0 1px 0 color-mix(in srgb, var(--c-gold-bright) 35%, transparent);
   transition: background-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-gold:hover {
-  background-color: rgba(228, 184, 99, 0.22);
-  border-color: rgba(228, 184, 99, 0.55);
+  background-color: color-mix(in srgb, var(--c-gold) 22%, transparent);
+  border-color: color-mix(in srgb, var(--c-gold) 55%, transparent);
   transform: translateY(-2px);
 }
 
