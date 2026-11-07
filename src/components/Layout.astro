@@ -2,6 +2,7 @@
 const { lang = 'zh' } = Astro.props;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NavBar from './NavBar.astro';
+import profile from '../data/profile.json';
 
 const footer = {
   zh: '© 2026 RedSamerai · Built with Astro & Tailwind',
@@ -9,10 +10,8 @@ const footer = {
 };
 const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 
-const t = {
-  zh: { tagline: '深墨夜景 · 香槟金 · 玻璃拟态', nav: '导航', social: '社交' },
-  en: { tagline: 'Nocturne glassmorphism', nav: 'Nav', social: 'Social' },
-}[lang];
+// 页脚简介：中文页用中文 tagline，英文页用英文 tagline（profile.json 无 en 字段则回退）
+const tagline = lang === 'en' ? 'Curated resources I actually use — quant, AI, screenwriting.' : profile.tagline;
 ---
 
 <BaseLayout htmlLang={htmlLang}>
@@ -25,17 +24,17 @@ const t = {
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <span class="font-serif text-xl font-semibold text-white">RedSamerai</span>
-          <p class="mt-2 text-xs text-white/60">{t.tagline}</p>
+          <p class="mt-2 text-xs text-white/60 max-w-xs">{tagline}</p>
         </div>
         <div>
-          <h4 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">{t.nav}</h4>
+          <h4 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">{lang === 'en' ? 'Nav' : '导航'}</h4>
           <ul class="space-y-1.5 text-sm">
             <li><a href={lang === 'en' ? '/en/' : '/'} class="text-white/80 hover:text-white transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">首页 / Home</a></li>
             <li><a href={lang === 'en' ? '/en/about' : '/about'} class="text-white/80 hover:text-white transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">关于 / About</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">{t.social}</h4>
+          <h4 class="text-xs font-mono text-white/40 uppercase tracking-widest mb-3">{lang === 'en' ? 'Social' : '社交'}</h4>
           <ul class="space-y-1.5 text-sm">
             <li>
               <a
