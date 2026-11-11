@@ -4,24 +4,17 @@
 //   一级：点分类 → 右侧显示该分类的小项按钮列表（二级），其他一级关闭
 //   二级：点小项 → 立即展开该小项的 NavItem 列表，小项之间互斥
 //   点已展开的小项 → 收起回小项列表；点已展开的一级 → 回到默认（profile）
-//   移动端：一级用横向 <select>，二级按钮全宽纵向；切二级后自动滚到内容区顶
+//   移动端：一级纵向堆叠在上方，二级在下方；切二级后自动滚到内容区顶
+// 性能：右侧内容区只渲染当前激活的分类/小项（DOM 节点 = 活跃分支，不随总条目数膨胀）
 import NavItem from './NavItem.astro';
 import PersonalPanel from './PersonalPanel.astro';
 
-const video = await import('../../data/nav/01-video.json');
-const books = await import('../../data/nav/02-books.json');
-const opensource = await import('../../data/nav/03-opensource.json');
-const pc = await import('../../data/nav/04-pc.json');
-const mobile = await import('../../data/nav/05-mobile.json');
-const common = await import('../../data/nav/06-common.json');
-const hidden = await import('../../data/nav/07-hidden.json');
-const learning = await import('../../data/nav/08-learning.json');
-const design = await import('../../data/nav/09-design.json');
-
-const categories = [
-  video.default, books.default, opensource.default, pc.default,
-  mobile.default, common.default, hidden.default, learning.default, design.default,
-];
+// 自动纳入 src/data/nav/ 下所有分类 JSON（01..09 + 未来新增的 10-ai 等），
+// 不再硬编码 import；加新分类只丢 json 文件即可
+const modules = import.meta.glob('../../data/nav/0*.json', { eager: true });
+const categories = Object.entries(modules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
 
 const lang = Astro.props.lang ?? 'zh';
 const titleOf = (c) => (lang === 'en' && c.title_en ? c.title_en : c.title);
@@ -30,100 +23,143 @@ const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
 
 <div class="nav-acc grid grid-cols-1 md:grid-cols-[240px_1fr] gap-6 md:gap-8 items-start">
   <!-- 左侧：一级大项按钮（桌面固定 240px 宽；移动端纵向堆叠在上方） -->
-  <div class="nav-sidebar shrink-0" role="tablist" aria-label="分类">
+  <div class="nav-sidebar shrink-0" aria-label="分类">
     <div class="flex flex-col gap-2 md:sticky md:top-24">
       {categories.map((c) => (
         <button
           type="button"
           data-l1={c.id}
-          role="tab"
+          aria-expanded="false"
           class="l1-btn text-left px-4 py-3 rounded-2xl border border-white/15 hover:border-white/30 bg-white/6 backdrop-blur-[30px] md:backdrop-blur-[40px] backdrop-saturate-[180%] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between gap-2 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)]"
         >
           <span class="font-mono text-sm font-medium text-white/80">
             <span class="text-white/40 mr-2">{c.id}</span>
             <span class="l1-title">{titleOf(c)}</span>
           </span>
-          <span class="l1-arrow text-white/40 text-sm">→</span>
+          <span class="l1-arrow text-white/40 text-sm" aria-hidden="true">→</span>
         </button>
       ))}
     </div>
   </div>
 
-  <!-- 右侧：内容区 -->
+  <!-- 右侧：内容区（只渲染激活分支） -->
   <div class="nav-content min-w-0" id="nav-content">
     <!-- 默认：个人信息面板（未选一级时） -->
-    <div data-panel="profile" class="acc-panel">
+    <div data-panel="profile">
       <PersonalPanel lang={lang} />
     </div>
 
-    {categories.map((c) => (
-      <div data-cat={c.id} class="acc-cat hidden">
-        <!-- 二级：小项按钮列表（选中一级后默认显示） -->
-        <div data-l1-active={c.id} class="l1-list">
-          <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6 text-white">{titleOf(c)}</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {c.subcategories.map((s) => (
-              <button
-                type="button"
-                data-l2={s.id}
-                class="l2-btn text-left px-4 py-3 rounded-2xl border border-white/15 hover:border-white/30 bg-white/6 backdrop-blur-[30px] md:backdrop-blur-[40px] backdrop-saturate-[180%] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between gap-2 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)]"
-              >
-                <span class="font-mono text-xs font-medium text-white/80">
-                  <span class="text-white/40 mr-1.5">{s.id}</span>
-                  <span class="l2-title text-sm text-white/80">{subTitleOf(s)}</span>
-                </span>
-                <span class="l2-arrow text-white/40 text-xs">→</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <!-- 三级：小项展开的条目列表（默认隐藏，点小项按钮后显示） -->
-        {c.subcategories.map((s) => (
-          <div data-l2-panel={s.id} class="l2-panel hidden">
-            <div class="flex items-center justify-between mb-5">
-              <h3 class="font-mono text-sm text-white/60 uppercase tracking-widest">
-                {s.id} · {subTitleOf(s)}
-              </h3>
-              <button
-                type="button"
-                data-l2-close={s.id}
-                class="l2-close font-mono text-xs text-white/40 hover:text-white/80 transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl"
-              >
-                收起 ↑
-              </button>
-            </div>
-            <ul class="space-y-4">
-              {s.items.map((item) => (
-                <NavItem item={item} subcategoryId={s.id} lang={lang} />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    ))}
+    <!-- 激活分类容器：由 JS 动态填充，初始为空 -->
+    <div data-panel="cat" class="acc-cat hidden"></div>
   </div>
 </div>
 
+<!-- 把分类数据注入为可被 <script> 访问的全局变量（SSR 注入，无网络请求） -->
+<script is:inline define:vars={{ navCategories: categories }}>
+  window.__NAV_CATEGORIES__ = navCategories;
+</script>
+
 <script>
-  // 两层手风琴：立即显示/隐藏，无展开动画
+  // 分类数据（由上方 <script is:inline> 注入到 window；SSR 时已含全部数据）
+  const CATS = window.__NAV_CATEGORIES__;
+  // 语言 + 标题选择（与组件 frontmatter 保持一致）
+  const lang = document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en';
+  const titleOf = (c) => (lang === 'en' && c.title_en ? c.title_en : c.title);
+  const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
   const content = document.querySelector('#nav-content');
   const profilePanel = content.querySelector('[data-panel="profile"]');
-  const cats = [...content.querySelectorAll('.acc-cat')];
+  const catSlot = content.querySelector('[data-panel="cat"]');
   const l1Btns = [...document.querySelectorAll('.l1-btn')];
-  const l2Btns = [...document.querySelectorAll('.l2-btn')];
-  const l2Closes = [...document.querySelectorAll('[data-l2-close]')];
-  let openCat = null;   // 当前展开的一级 id
-  let openSub = null;   // 当前展开的二级 id
+  let openCat = null;
+  let openSub = null;
 
   const isMobile = () => window.innerWidth < 768;
 
-  // 高亮 / 箭头状态
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, (ch) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
+  }
+
+  // 渲染指定分类的小项列表（二级按钮网格）
+  function renderSubList(catId) {
+    const c = CATS.find((x) => x.id === catId);
+    if (!c) return;
+    catSlot.innerHTML = `
+      <div data-l1-active="${c.id}">
+        <h2 class="font-serif text-3xl font-semibold tracking-tight mb-6 text-white">${esc(titleOf(c))}</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          ${c.subcategories.map((s) => `
+            <button type="button" data-l2="${s.id}"
+              class="l2-btn text-left px-4 py-3 rounded-2xl border border-white/15 hover:border-white/30 bg-white/6 backdrop-blur-[30px] md:backdrop-blur-[40px] backdrop-saturate-[180%] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] flex items-center justify-between gap-2 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)]">
+              <span class="font-mono text-xs font-medium text-white/80">
+                <span class="text-white/40 mr-1.5">${esc(s.id)}</span>
+                <span class="l2-title text-sm text-white/80">${esc(subTitleOf(s))}</span>
+              </span>
+              <span class="l2-arrow text-white/40 text-xs" aria-hidden="true">→</span>
+            </button>`).join('')}
+        </div>
+      </div>`;
+    bindL2();
+  }
+
+  // 渲染指定小项的条目列表（三级）
+  function renderSubPanel(catId, subId) {
+    const c = CATS.find((x) => x.id === catId);
+    const s = c?.subcategories.find((x) => x.id === subId);
+    if (!c || !s) return;
+    catSlot.innerHTML = `
+      <div data-l2-panel="${s.id}">
+        <div class="flex items-center justify-between mb-5">
+          <h3 class="font-mono text-sm text-white/60 uppercase tracking-widest">${esc(s.id)} · ${esc(subTitleOf(s))}</h3>
+          <button type="button" data-l2-close="${s.id}"
+            class="l2-close font-mono text-xs text-white/40 hover:text-white/80 transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl">
+            收起 ↑
+          </button>
+        </div>
+        <ul class="space-y-4">
+          ${s.items.map((item) => renderItem(item, s.id)).join('')}
+        </ul>
+      </div>`;
+    bindL2();
+  }
+
+  // NavItem 条目 HTML（与 NavItem.astro 同构；SSR 用 Astro 预渲染，运行时用此兜底）
+  function renderItem(item, subId) {
+    const langTag = document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en';
+    const vpnLabel = langTag === 'en' ? '🔓 VPN required' : '🔓 需科学上网';
+    const noteText = langTag === 'en' ? (item.note_en || item.note) : item.note;
+    const addedDate = item.added ? new Date(item.added + 'T00:00:00') : null;
+    const isNew = addedDate ? (Date.now() - addedDate.getTime()) / 86400000 < 14 : false;
+    const issueUrl =
+      'https://github.com/RedSamerai/personal-site/issues/new?title=' +
+      encodeURIComponent(`[失效] ${subId} ${item.name}`) +
+      '&body=' + encodeURIComponent('链接已失效');
+    return `
+      <li class="glass-card group/item flex items-start gap-3 p-5 md:p-6">
+        <div class="flex-1 min-w-0 relative z-10">
+          <div class="flex items-center gap-2 flex-wrap">
+            <a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer"
+              class="font-medium text-white hover:text-[#F3DCA8] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] break-all focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl">${esc(item.name)}</a>
+            ${item.stars ? `<span class="text-xs font-mono text-[#E4B863]">⭐ ${esc(item.stars)}</span>` : ''}
+            ${item.vpn ? `<span class="text-xs font-mono text-white/60 bg-white/8 border border-white/15 rounded-2xl px-2 py-0.5">${vpnLabel}</span>` : ''}
+            ${isNew ? `<span class="relative flex w-2 h-2" title="新增加入（14天内）">
+              <span class="absolute inline-flex w-full h-full rounded-full bg-[#E4B863] opacity-60"></span>
+              <span class="relative inline-flex w-2 h-2 rounded-full bg-[#E4B863]"></span>
+            </span>` : ''}
+          </div>
+          ${noteText ? `<p class="mt-1.5 text-sm text-white/60 leading-relaxed max-w-[65ch]">${esc(noteText)}</p>` : ''}
+        </div>
+        <a href="${esc(issueUrl)}" target="_blank" rel="noopener noreferrer"
+          aria-label="${langTag === 'en' ? 'Report broken' : '失效反馈'}" title="${langTag === 'en' ? 'Report broken' : '失效反馈'}"
+          class="relative z-10 shrink-0 text-white/40 hover:text-[#E4B863] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] text-sm opacity-0 group-hover/item:opacity-100 focus:opacity-100 focus:outline-none focus:shadow-[0_0_0_3px_rgba(228,184,99,0.18)] rounded-2xl">⚠</a>
+      </li>`;
+  }
+
   function markL1(id) {
     l1Btns.forEach((b) => {
       const on = b.dataset.l1 === id;
       b.classList.toggle('l1-active', on);
-      b.setAttribute('aria-selected', String(on));
+      b.setAttribute('aria-expanded', String(on));
       const arrow = b.querySelector('.l1-arrow');
       if (arrow) {
         arrow.textContent = on ? '↓' : '→';
@@ -131,91 +167,66 @@ const subTitleOf = (s) => (lang === 'en' && s.title_en ? s.title_en : s.title);
       }
     });
   }
-  function markL2(cat, sub) {
-    cats.forEach((catEl) => {
-      catEl.querySelectorAll('.l2-btn').forEach((b) => {
-        const on = catEl.dataset.cat === cat && b.dataset.l2 === sub;
-        b.classList.toggle('l2-active', on);
-        const arrow = b.querySelector('.l2-arrow');
-        if (arrow) arrow.textContent = on ? '↓' : '→';
-      });
-    });
-  }
-  // 仅显示指定一级
-  function showCat(id) {
-    cats.forEach((c) => c.classList.toggle('hidden', c.dataset.cat !== id));
-  }
-  // 仅显示指定二级条目列表
-  function showSub(cat, sub) {
-    const catEl = content.querySelector(`[data-cat="${cat}"]`);
-    if (!catEl) return;
-    catEl.querySelector('[data-l1-active]').classList.add('hidden');
-    catEl.querySelectorAll('.l2-panel').forEach((p) =>
-      p.classList.toggle('hidden', p.dataset.l2Panel !== sub)
-    );
-  }
-  // 显示一级的小项按钮列表（收起所有二级）
-  function showSubList(cat) {
-    const catEl = content.querySelector(`[data-cat="${cat}"]`);
-    if (!catEl) return;
-    catEl.querySelectorAll('.l2-panel').forEach((p) => p.classList.add('hidden'));
-    catEl.querySelector('[data-l1-active]').classList.remove('hidden');
-  }
+
   function scrollToTop() {
-    if (isMobile()) {
-      content.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
-  function resetAll() {
-    openCat = null; openSub = null;
-    cats.forEach((c) => c.classList.add('hidden'));
-    profilePanel.classList.remove('hidden');
-    markL1(null); markL2(null, null);
+    if (isMobile()) content.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // 一级：点分类 → 显示其小项列表（重置二级）；点已展开的一级 → 回默认
+  function bindL2() {
+    catSlot.querySelectorAll('.l2-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const cat = openCat;
+        const sub = btn.dataset.l2;
+        if (openSub === sub) {
+          // 点已展开的小项 → 收起回小项列表
+          openSub = null;
+          renderSubList(cat);
+        } else {
+          openSub = sub;
+          renderSubPanel(cat, sub);
+        }
+        // 高亮当前小项
+        catSlot.querySelectorAll('.l2-btn').forEach((b) => {
+          const on = b.dataset.l2 === sub;
+          b.classList.toggle('l2-active', on);
+          const a = b.querySelector('.l2-arrow');
+          if (a) { a.textContent = on ? '↓' : '→'; a.classList.toggle('text-accent', on); }
+        });
+        scrollToTop();
+      });
+    });
+    const close = catSlot.querySelector('.l2-close');
+    if (close) {
+      close.addEventListener('click', () => {
+        openSub = null;
+        renderSubList(openCat);
+        catSlot.querySelectorAll('.l2-btn').forEach((b) => {
+          b.classList.remove('l2-active');
+          const a = b.querySelector('.l2-arrow');
+          if (a) { a.textContent = '→'; a.classList.remove('text-accent'); }
+        });
+      });
+    }
+  }
+
+  // 一级按钮：点分类 → 显示其小项列表；点已展开的 → 回默认
   l1Btns.forEach((btn) => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.l1;
-      if (openCat === id) { resetAll(); }
-      else {
-        openCat = id; openSub = null;
-        showCat(id);
-        showSubList(id);
-        profilePanel.classList.add('hidden');
-        markL1(id); markL2(null, null);
-      }
-      scrollToTop();
-    });
-  });
-
-  // 二级：点小项 → 展开条目；点已展开的小项 → 收起回小项列表
-  l2Btns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const cat = btn.closest('.acc-cat').dataset.cat;
-      const sub = btn.dataset.l2;
-      if (openCat === cat && openSub === sub) {
-        openSub = null;
-        showSubList(cat);
-        markL2(cat, null);
+      if (openCat === id) {
+        openCat = null; openSub = null;
+        catSlot.classList.add('hidden');
+        catSlot.innerHTML = '';
+        profilePanel.classList.remove('hidden');
+        markL1(null);
       } else {
-        openCat = cat; openSub = sub;
-        showCat(cat);
-        showSub(cat, sub);
-        markL1(cat); markL2(cat, sub);
+        openCat = id; openSub = null;
+        profilePanel.classList.add('hidden');
+        catSlot.classList.remove('hidden');
+        renderSubList(id);
+        markL1(id);
       }
       scrollToTop();
-    });
-  });
-
-  // 二级条目列表里的「收起 ↑」
-  l2Closes.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const sub = btn.dataset.l2Close;
-      const cat = btn.closest('.acc-cat').dataset.cat;
-      openSub = null;
-      showSubList(cat);
-      markL2(cat, null);
     });
   });
 </script>

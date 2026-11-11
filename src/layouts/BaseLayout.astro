@@ -17,7 +17,10 @@ import '../styles/global.css';
           const saved = localStorage.getItem('theme');
           // 默认深色（Nocturne 夜景），不跟随系统
           const theme = saved || 'dark';
-          document.documentElement.setAttribute('data-theme', theme);
+          const root = document.documentElement;
+          root.setAttribute('data-theme', theme);
+          // 原生控件（滚动条/表单）跟随主题
+          root.style.colorScheme = theme;
         } catch (e) {}
       })();
     </script>
@@ -38,15 +41,20 @@ import '../styles/global.css';
     <script>
       (function() {
         try {
-          const io = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                io.unobserve(entry.target);
-              }
-            });
-          }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-          document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+          // 渐进增强：仅当 JS 可用 + 未请求减动效时，才启用 fade-in 动画
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (!reduce) {
+            document.documentElement.classList.add('js-ready');
+            const io = new IntersectionObserver((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('visible');
+                  io.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+          }
         } catch (e) {}
       })();
     </script>
