@@ -1,6 +1,28 @@
----
-const { htmlLang = 'zh-CN' } = Astro.props;
+﻿---
+// 基础布局：head/字体/背景光斑 + body 骨架
+// props:
+//   htmlLang: 'zh-CN' | 'en'（<html lang>）
+//   title: 页面标题（<title>）
+//   description: 本地化 meta description
+//   pagePath: ''=首页、'about'=关于页（不带 /en/ 前缀）
+//   isEn: 是否英文页（决定 canonical 指向 + og:locale）
+const { htmlLang = 'zh-CN', title = 'RedSamerai', description = '', pagePath = '', isEn = false } = Astro.props;
 import '../styles/global.css';
+
+// canonical / hreflang / og 的绝对 URL
+const site = Astro.site ?? new URL('https://c63ec20e.personal-site-ea5.pages.dev');
+const zhUrl = new URL(pagePath ? `/${pagePath}` : '/', site).href;
+const enUrl = new URL(pagePath ? `/en/${pagePath}` : '/en/', site).href;
+const canonical = isEn ? enUrl : zhUrl;
+
+// JSON-LD：站点 + 人物
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'WebSite', name: 'RedSamerai', url: site.href },
+    { '@type': 'Person', name: 'RedSamerai', url: zhUrl },
+  ],
+});
 ---
 
 <!doctype html>
@@ -8,9 +30,27 @@ import '../styles/global.css';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="RedSamerai 的个人主页" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <meta name="generator" href="https://astro.build" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- canonical + hreflang（中英双页互链 + x-default 指向 en） -->
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh" href={zhUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <!-- Open Graph / Twitter 分享卡（og-cover.png 就位后再补 og:image / twitter:image） -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RedSamerai" />
+    <meta property="og:locale" content={isEn ? 'en_US' : 'zh_CN'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <!-- 站点级 JSON-LD -->
+    <script type="application/ld+json" set:html={jsonLd} />
     <script>
       (function() {
         try {

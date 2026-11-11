@@ -1,5 +1,9 @@
 ---
-const { lang = 'zh' } = Astro.props;
+// 页面通用布局：BaseLayout（head/字体）+ NavBar（导航）+ 页脚
+// props:
+//   lang: 'zh' | 'en'
+//   title / description / pagePath: 转发给 BaseLayout 的 SEO 元数据
+const { lang = 'zh', title = 'RedSamerai', description = '', pagePath = '' } = Astro.props;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import NavBar from './NavBar.astro';
 import profile from '../data/profile.json';
@@ -14,7 +18,13 @@ const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
 const tagline = lang === 'en' ? 'Curated resources I actually use — quant, AI, screenwriting.' : profile.tagline;
 ---
 
-<BaseLayout htmlLang={htmlLang}>
+<BaseLayout
+  htmlLang={htmlLang}
+  title={title}
+  description={description}
+  pagePath={pagePath}
+  isEn={lang === 'en'}
+>
   <NavBar lang={lang} />
   <main class="flex-1 pt-16">
     <slot />
